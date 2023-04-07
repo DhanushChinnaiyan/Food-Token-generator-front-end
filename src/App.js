@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from "react-router-dom";
+import "./App.css";
+import Customerforgot from "./Components/Customer_Components/Forgot/ForgotPassword";
+import Signin from "./Components/Customer_Components/SignIn/Signin";
+import Signup from "./Components/Customer_Components/Signup/Signup";
+import Ownerforgot from "./Components/Owner_components/Forgot/ForgotPassword";
+import OwnerSignin from "./Components/Owner_components/SignIn/Signin";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {/* customer */}
+      <Switch>
+        <Route path="/customersignup">
+          <Signup />
+        </Route>
+
+        <Route path="/customersignin">
+          <Signin />
+        </Route>
+
+        <Route path="/forgotpassword">
+          <Customerforgot />
+        </Route>
+
+   
+      </Switch>
+
+      {/* OWNER */}
+      <Switch>
+        <Route path="/ownersignin">
+          <OwnerSignin />
+        </Route>
+
+        <Route path="/ownerforgotpassword">
+          <Ownerforgot />
+        </Route>
+      </Switch>
     </div>
   );
 }
