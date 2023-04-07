@@ -28,7 +28,7 @@ function App() {
 
       {/* OWNER */}
       <Switch>
-        <Route path="/ownersignin">
+        <Route path="/ownersign">
           <OwnerSignin />
         </Route>
 
