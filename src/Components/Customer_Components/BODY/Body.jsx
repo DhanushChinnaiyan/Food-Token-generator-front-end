@@ -40,7 +40,7 @@ const Body = () => {
     
           try {
       
-              const response = await fetch("http://localhost:9000/customer/food",{
+              const response = await fetch("https://food-token-generator-backend.vercel.app/customer/food",{
                   method:"GET",
                   headers:{
                       "x-auth-customertoken":localStorage.getItem("customertoken")

@@ -37,7 +37,7 @@ const Signup = () => {
 const addNewCustomer = async (newcustomer) => {
   try {
 
-    const response = await fetch("http://localhost:9000/customer/signup", {
+    const response = await fetch("https://food-token-generator-backend.vercel.app/customer/signup", {
       method: "POST",
       body: JSON.stringify(newcustomer),
       headers: {

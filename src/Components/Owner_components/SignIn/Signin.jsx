@@ -25,7 +25,7 @@ const OwnerSignin = () => {
   const ownerlogin = async (ownerSignin) => {
     try {
 
-      const response = await fetch("http://localhost:9000/owner/login", {
+      const response = await fetch("https://food-token-generator-backend.vercel.app/owner/login", {
         method: "POST",
         body: JSON.stringify(ownerSignin),
         headers: {
