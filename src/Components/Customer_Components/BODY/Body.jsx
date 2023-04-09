@@ -5,16 +5,20 @@ import {decodeToken} from 'react-jwt'
 import Base from '../../BASE/Base'
 import CustomerSidebar from '../Sidebar/Sidebar'
 import { useState } from 'react';
-import FoodToken from '../Food/Food'
+import FoodToken from '../FoodToken/Food'
 import AddtoCart from '../Cart/AddtoCart'
+import Food from '../Foods list/food'
+import './body.css'
+
 
 
 const Body = () => {
   const [sideBarCliked,setSideBarClicked]=useState(false)
   const [cartclicked,setCartClicked] = useState(false);
   const [tokenClicked,setTokenClicked] = useState(false);
-  const [foodCategories,setFoodCategories] = useState([])
-
+  const [foodList,setFoodList] = useState([])
+  const [foodTokenlist, setFoodTokenlist] = useState([])
+  const [cartlist,setCartlist] = useState([])
  const history = useHistory();
 
 
@@ -32,12 +36,8 @@ const Body = () => {
         }
 
 
-        const getfoodcategories = async()=>{
+        const getfoodList = async()=>{
 
-
-
-
-    
           try {
       
               const response = await fetch("https://food-token-generator-backend.vercel.app/customer/food",{
@@ -49,22 +49,52 @@ const Body = () => {
               })
       
               const data = await response.json()
-              setFoodCategories(data)
-              console.log(foodCategories)
+              setFoodList(data)
+              
               
           } catch (error) {
               console.log("get food error",error)
           }
       }
+
+      const token = async () => {
+        const response = await fetch("https://food-token-generator-backend.vercel.app/token", {
+          method: "GET",
+          headers: {
+            "x-auth-customertoken": localStorage.getItem("customertoken")
+          }
+        })
+  
+        const data = await response.json()
+  
+        setFoodTokenlist(data)
+      }
+
+      const cart = async () => {
+        const response = await fetch("https://food-token-generator-backend.vercel.app/cart", {
+          method: "GET",
+          headers: {
+            "x-auth-customertoken": localStorage.getItem("customertoken")
+          }
+        })
+  
+        const data = await response.json()
+  
+        setCartlist(data)
+      }
+
+      cart()
+
+      token()
      
-      getfoodcategories()
+      getfoodList()
   
 
     },[])
     
 
   return (
-    <div>
+    <div className='body'>
        
             <MainContents
 
@@ -74,7 +104,12 @@ const Body = () => {
               setCartClicked={setCartClicked}
               tokenClicked={tokenClicked}
               setTokenClicked={setTokenClicked}
-              foodCategories={foodCategories}
+              foodList={foodList}
+              setFoodList={setFoodList}
+              foodTokenlist={foodTokenlist}
+              setFoodTokenlist={setFoodTokenlist}
+              cartlist={cartlist}
+              setCartlist={setCartlist}
             />
            
     </div>
@@ -83,7 +118,7 @@ const Body = () => {
 
 export default Body;
 
-const MainContents =({foodCategories,sideBarCliked,setSideBarClicked,cartclicked,setCartClicked,tokenClicked,setTokenClicked})=>{
+const MainContents = ({cartlist,setCartlist,foodTokenlist,setFoodTokenlist,foodList,setFoodList,sideBarCliked,setSideBarClicked,cartclicked,setCartClicked,tokenClicked,setTokenClicked})=>{
   return(
     <Base
 
@@ -97,18 +132,35 @@ const MainContents =({foodCategories,sideBarCliked,setSideBarClicked,cartclicked
     {
       sideBarCliked &&
      <CustomerSidebar
-     foodCategories={foodCategories}
+     foodList={foodList}
      />
     
     }
     {
-      tokenClicked && <FoodToken/>
+      tokenClicked && <FoodToken
+      
+      foodTokenlist={foodTokenlist}
+              setFoodTokenlist={setFoodTokenlist}
+      />
       
     }
     {
-      cartclicked && <AddtoCart/>
+      cartclicked && <AddtoCart
+      cartlist={cartlist}
+              setCartlist={setCartlist}
+              setSideBarClicked={setSideBarClicked}
+              setCartClicked={setCartClicked}
+              setTokenClicked={setTokenClicked}
+              setFoodTokenlist={setFoodTokenlist}
+              foodTokenlist={foodTokenlist}
+      />
     }
     
+    <Food
+        foodList={foodList}
+    setFoodList={setFoodList}
+    
+    />
       
     </Base>
   )

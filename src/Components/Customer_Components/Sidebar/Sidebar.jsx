@@ -13,7 +13,7 @@ const CustomerSidebar = () => {
     return (
         <div className='customersidebarMainDiv'>
             <div className="customername">
-                Welcome {localStorage.getItem("CustomerName")}
+                Welcome <span>{localStorage.getItem("CustomerName")}</span>
             </div>
             <div className="foodDiv">
                 <div className="foodTittle">
@@ -25,13 +25,13 @@ const CustomerSidebar = () => {
                             <li>BIRIYANI</li>
                         </Link>
 
-                        <Link spy={true} to="biriyani" smooth={true} activeClass="activclass">
+                        <Link spy={true} to="burger" smooth={true} activeClass="activclass">
                             <li>BURGER</li>
                         </Link>
-                        <Link spy={true} to="biriyani" smooth={true} activeClass="activclass">
+                        <Link spy={true} to="shawarma" smooth={true} activeClass="activclass">
                             <li>SHAWARMA</li>
                         </Link>
-                        <Link spy={true} to="biriyani" smooth={true} activeClass="activclass">
+                        <Link spy={true} to="noodles" smooth={true} activeClass="activclass">
                             <li>NOODLES</li>
                         </Link>
 

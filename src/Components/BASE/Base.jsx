@@ -39,7 +39,7 @@ const Base = ({children,sideBarCliked,setSideBarClicked,cartclicked,setCartClick
         <div>
 
 
-            <AppBar position='static'>
+            <AppBar position='fixed'>
                 <Toolbar style={{ display: "flex" }} variant='dense'>
                     <div style={{ flex: 1 }}>
                         <GiHamburgerMenu onClick={menuIcon} size="calc(15px + 1vw)" style={{ cursor: "pointer" }} />

@@ -64,11 +64,10 @@ FRONT END:
             ii)CATEGORY
             
         3)BODY:
-            i)FILTER (DROPDOWN METHOD),
-            ii)SORT (DROPDOWN METHOD),
-            iii)PRODUCT NAME,
-            iv)PRODUCT PRICE,
-            V)ADDTOCART BUTTON    
+          
+            i)PRODUCT NAME,
+            ii)PRODUCT PRICE,
+            iii)ADDTOCART BUTTON    
  
 
     (II)OWNER OF FOOD COMPANY:
