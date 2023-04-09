@@ -1,0 +1,10 @@
+.customerFoodToken{
+    border: 1px solid black;
+    height: 86.5vh;
+    width: calc(150px + 16vw);
+    padding: calc(10px + 1vw);
+    font-size: calc(10px + 0.5vw);
+    position: fixed;
+    right: 0;
+    overflow-y: scroll;
+}

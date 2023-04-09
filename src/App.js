@@ -5,35 +5,55 @@ import Signin from "./Components/Customer_Components/SignIn/Signin";
 import Signup from "./Components/Customer_Components/Signup/Signup";
 import Ownerforgot from "./Components/Owner_components/Forgot/ForgotPassword";
 import OwnerSignin from "./Components/Owner_components/SignIn/Signin";
+import { useState } from "react";
+import Nopage from "./Components/NOPAGE/nopage";
+import Body from "./Components/Customer_Components/BODY/Body";
+import OwnerBody from "./Components/Owner_components/BODY/Body";
+import MainDash from "./Components/Main Dash/MainDash";
 
 function App() {
+const [customersData,setCustomerData] = useState("")
+
   return (
     <div className="App">
       {/* customer */}
       <Switch>
+
+        <Route exact path='/'>
+          <MainDash/>
+        </Route>
         <Route path="/customersignup">
-          <Signup />
+          <Signup/>
         </Route>
 
         <Route path="/customersignin">
           <Signin />
         </Route>
 
-        <Route path="/forgotpassword">
+        <Route path="/customerforgotpassword">
           <Customerforgot />
         </Route>
 
-   
-      </Switch>
+        <Route path='/customerdash'>
+          <Body/>
+        </Route>
+        
 
       {/* OWNER */}
-      <Switch>
-        <Route path="/ownersign">
+   
+        <Route path="/ownersignin">
           <OwnerSignin />
         </Route>
 
         <Route path="/ownerforgotpassword">
           <Ownerforgot />
+        </Route>
+        <Route path='/ownerdash'>
+          <OwnerBody/>
+        </Route>
+
+        <Route path="**">
+          <Nopage/>
         </Route>
       </Switch>
     </div>

@@ -3,8 +3,12 @@ import './Forgot.css'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Link } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 const Ownerforgot = () => {
+
+  const history = useHistory()
+
   return (
     <div className="ownerforgotdiv">
       <div className="tittle">
@@ -31,7 +35,7 @@ const Ownerforgot = () => {
         />
       <Button type='submit' variant='contained' color='success'>CHANGE PASSWORD</Button>
 
-        <Link href="#" underline="hover">
+        <Link style={{cursor:"pointer"}} onClick={()=>history.push("/ownersignin")} underline="hover">
         I remember my password
      </Link>
 

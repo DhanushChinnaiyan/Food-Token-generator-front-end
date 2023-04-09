@@ -1,0 +1,25 @@
+
+.customersidebarMainDiv{
+    border: 1px solid black;
+    height: 86.5vh;
+    width: calc(80px + 5vw);
+    padding: calc(10px + 1vw);
+  
+    position: fixed;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: calc(10px + 1vw);
+    font-weight: bold;
+}
+
+.customername{
+    font-size: calc(10px + 0.5vw);
+}
+
+.foodDiv{
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

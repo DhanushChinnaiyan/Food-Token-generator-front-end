@@ -3,8 +3,10 @@ import './Forgot.css'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Link } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 const Customerforgot = () => {
+  const history = useHistory()
   return (
     <div className="customerforgotdiv">
       <div className="tittle">
@@ -31,7 +33,7 @@ const Customerforgot = () => {
         />
       <Button type='submit' variant='contained' color='success'>CHANGE PASSWORD</Button>
 
-        <Link href="#" underline="hover">
+        <Link style={{cursor:"pointer"}} onClick={()=>{history.replace("/customersignin")}} underline="hover">
         I remember my password
      </Link>
 

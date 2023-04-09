@@ -3,45 +3,121 @@ import './Signup.css'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, Link } from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
+
+// schema validations
+
+export const customerValidation = yup.object({
+  name: yup.string().required(),
+  email: yup.string().required(),
+  password: yup.string().required().min(5,"required min 5 character")
+})
 
 const Signup = () => {
+
+  const [message,setMessage]=useState("")
+  const history = useHistory()
+
+  const {values,handleChange,handleSubmit,handleBlur,error,touched} = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: ""
+    },
+    validationSchema: customerValidation,
+    onSubmit: (newcustomer) => {
+      addNewCustomer(newcustomer)
+    }
+  })
+
+
+const addNewCustomer = async (newcustomer) => {
+  try {
+
+    const response = await fetch("http://localhost:9000/customer/signup", {
+      method: "POST",
+      body: JSON.stringify(newcustomer),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+
+    const customer = await response.json();
+
+    if(customer.message === "succefully signed up"){
+     history.push("/customersignin")
+      setMessage("")
+      return
+    }
+    else{
+      setMessage(customer.message)
+    }
+
+    
+
+
+  } catch (error) {
+    console.log("add customer error ", error)
+  }
+
+}
+
+
   return (
     <div className="signupdiv">
       <div className="tittle">
-       CUSTOMER SIGNUP HERE :
+        CUSTOMER SIGNUP HERE :
       </div>
       <Box
-      component="form"
-      className='signupform'
- 
-    >
+        component="form"
+        className='signupform'
+        onSubmit={handleSubmit}
+      >
         <TextField
           required
-          id="outlined-required"
+          id="fullWidth--input"
           label="Name"
           type='text'
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.name}
+          name='name'
 
         />
         <TextField
           required
-          id="outlined-required"
+          id="fullWidth-email-input"
           label="Email"
           type='email'
-        
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.email}
+          name='email'
+
         />
         <TextField
           required
-          id="outlined-password-input"
-          label="Password"
+          id="fullWidth-password-input"
+          label="Password (min 5 character)"
           type="password"
           autoComplete="current-password"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.password}
+          name='password'
         />
-      <Button type='submit' variant='contained' color='success'>SIGNUP NOW</Button>
-      <Link href="#" underline="hover">
-     Already have an account? Sign in
-     </Link>
-   
-    </Box>
+        <Button type='submit' variant='contained' color='success'>SIGNUP NOW</Button>
+        
+        <div className="messagediv" style={{color:"red"}}>{message}</div>
+        
+        <Link style={{cursor:"pointer"}} onClick={()=>history.push("/customersignin")} underline="hover">
+          Already have an account? Sign in
+        </Link>
+
+      </Box>
     </div>
   );
 }
