@@ -17,7 +17,7 @@ const OwnerBody = () => {
 
     const logoutFunction = () => {
         localStorage.removeItem("ownertoken")
-        history.replace("/ownersignin")
+        history.replace("/")
     }
 
   return (

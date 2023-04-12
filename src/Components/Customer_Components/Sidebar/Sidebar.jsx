@@ -3,7 +3,7 @@ import './Sidebar.css'
 import {Link} from 'react-scroll'
 
 
-const CustomerSidebar = () => {
+const CustomerSidebar = ({setSideBarClicked}) => {
 
 
 
@@ -22,17 +22,17 @@ const CustomerSidebar = () => {
                 <div className="categories">
                     <ul style={{listStyle:"none"}}>
                         <Link spy={true} to="biriyani" smooth={true} activeClass="activclass">
-                            <li>BIRIYANI</li>
+                            <li onClick={()=>setSideBarClicked(false)}>BIRIYANI</li>
                         </Link>
 
                         <Link spy={true} to="burger" smooth={true} activeClass="activclass">
-                            <li>BURGER</li>
+                            <li onClick={()=>setSideBarClicked(false)}>BURGER</li>
                         </Link>
                         <Link spy={true} to="shawarma" smooth={true} activeClass="activclass">
-                            <li>SHAWARMA</li>
+                            <li onClick={()=>setSideBarClicked(false)}>SHAWARMA</li>
                         </Link>
                         <Link spy={true} to="noodles" smooth={true} activeClass="activclass">
-                            <li>NOODLES</li>
+                            <li onClick={()=>setSideBarClicked(false)}>NOODLES</li>
                         </Link>
 
 

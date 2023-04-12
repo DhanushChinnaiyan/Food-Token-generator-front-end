@@ -60,6 +60,8 @@ const Signin = () => {
     <div className="signindiv">
       <div className="tittle">
         CUSTOMER SIGNIN HERE :
+        <div>EMAIL: dhanushmd4021@gmail.com</div>
+        <div>Password : 12345678</div>
       </div>
       <Box
         component="form"

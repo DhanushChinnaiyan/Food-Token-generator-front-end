@@ -6,10 +6,12 @@ import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 
-const FoodToken = ({foodTokenlist,setFoodTokenlist}) => {
+const FoodToken = ({foodTokenlist,setFoodTokenlist,setTokenClicked}) => {
 
  
-
+if(foodTokenlist.length === 0) {
+  setTokenClicked(false)
+}
 
 
   const handleClick = async(id) => {
@@ -40,6 +42,7 @@ const FoodToken = ({foodTokenlist,setFoodTokenlist}) => {
       <div className="tokenTittle">
         TOKEN :
       </div>
+      <div style={{textAlign:"center"}}>Present the token when the owner delivers food to your home</div>
       <div className="tokenDiv">
         {
           foodTokenlist.map((element, index) => {
@@ -47,7 +50,7 @@ const FoodToken = ({foodTokenlist,setFoodTokenlist}) => {
               <Card key={index} className="tokenCart" style={{boxShadow:"inset 0 0 calc(10px + 2vw) rgb(122, 195, 251)",borderRadius:"calc(5px + 1vw)"}}>
                
                <CardMedia   
-                    sx={{height:"calc(80px + 7vw)"}}
+                    sx={{height:"calc(70px + 4vw)",borderRadius:"calc(10px + 0.5vw) calc(10px + 0.5vw) 0 0"}}
                     image={element.foodImage}
                     tittle = "nothing"
                     />
@@ -55,13 +58,19 @@ const FoodToken = ({foodTokenlist,setFoodTokenlist}) => {
                 <CardContent>
 
                   <Typography gutterBottom component="div">
-                    <span>Food Name :</span> <span>{element.foodName}</span>
+                <span>{element.foodName}</span>
+                  </Typography>
+                  <Typography gutterBottom  component="div">
+                  <span>Total food ordered:</span> <span>{element.noOfFood}</span>
+                  </Typography>
+                  <Typography gutterBottom component="div">
+                <span>Total Price:{element.foodPrice} .RS</span>
                   </Typography>
                   <Typography gutterBottom  component="div">
                   <span>Token:</span> <span>{element._id}</span>
                   </Typography>
                   
-                  <div><Button onClick={()=>handleClick(element._id)} size="small">Cancel Order</Button></div>
+                  <div><Button onClick={()=>handleClick(element._id)} size="small" variant='contained' color='error' style={{fontSize:"calc(8px + 0.1vw)",fontWeight:"bold"}}>Cancel Order</Button></div>
                   </CardContent>
               </Card>
             )

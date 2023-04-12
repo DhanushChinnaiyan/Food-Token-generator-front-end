@@ -9,9 +9,11 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 const Base = ({children,sideBarCliked,setSideBarClicked,cartclicked,setCartClicked,tokenClicked,setTokenClicked}) => {
    
     const history = useHistory()
+
+
     const logout = () => {
         localStorage.removeItem("customertoken")
-        history.replace("/customersignin")
+        history.replace("/")
     }
 
     const menuIcon =() => {

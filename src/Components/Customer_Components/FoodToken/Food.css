@@ -1,9 +1,9 @@
 .customerFoodToken{
     /* border: 1px solid black; */
     height: 87.5vh;
-    width: calc(150px + 16vw);
+    width: calc(150px + 5vw);
     padding: calc(10px + 1vw);
-    font-size: calc(10px + 0.5vw);
+      font-size: calc(10px + 0.1vw);
     position: fixed;
     right: 0;
     overflow-y: auto;
@@ -32,49 +32,56 @@
   display: flex;
   flex-direction: column;
   gap: calc(5px + 1vw);
- 
 }
 
 .tokenCart{
     /* border: 1px solid black; */
-    padding: calc(5px + 1vw);
+    padding: calc(3px + 0.1vw) calc(3px + 0.1vw) 0 calc(3px + 0.1vw);
 
 
+}
+.tokenCart>:nth-child(2){
+    padding: calc(3px + 0.1vw);
 }
 
 .tokenCart>:nth-child(2)>:nth-child(1){
     /* border: 1px solid black; */
-    font-weight: bold;
-    font-size: calc(10px + 0.5vw);
-    display: flex;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: bolder;
+      font-size: calc(10px + 0.1vw);
     gap: 3px;
 }
 
-.tokenCart>:nth-child(2)>:nth-child(1)>:nth-child(2){
-    font-size: calc(8px + 0.5vw);
-    display: flex;
-    align-items: center;
-}
+
 .tokenCart>:nth-child(2)>:nth-child(2){
     /* border: 1px solid black; */
-    font-size: calc(10px + 0.5vw);
+      font-size: calc(10px + 0.1vw);
     display: flex;
     gap: 3px;
     font-weight: bold;
-}
-.tokenCart>:nth-child(2)>:nth-child(2)>:nth-child(2){
-    font-size: calc(7px + 0.5vw);
-    display: flex;
-    align-items: center;
 }
 .tokenCart>:nth-child(2)>:nth-child(3){
     /* border: 1px solid black; */
-text-align: center;
+    font-size: calc(10px + 0.1vw);
 
 }
 
-.tokenCart>:nth-child(2)>:nth-child(3)>button{
+.tokenCart>:nth-child(2)>:nth-child(4){
     /* border: 1px solid black; */
-
+      font-size: calc(10px + 0.1vw);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
     font-weight: bold;
+    color: green;
+}
+.tokenCart>:nth-child(2)>:nth-child(4)>:nth-child(2){
+    font-size: calc(9px + 0.1vw);
+}
+
+.tokenCart>:nth-child(2)>:nth-child(5){
+
+    text-align: center;
+
 }

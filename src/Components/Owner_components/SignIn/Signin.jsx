@@ -55,6 +55,8 @@ const OwnerSignin = () => {
     <div className="ownersignindiv">
       <div className="tittle">
        OWNER SIGNIN HERE :
+       <div>EMAIL: dhanushms4021@gmail.com</div>
+        <div>Password : Password@123</div>
       </div>
       <Box
       component="form"
