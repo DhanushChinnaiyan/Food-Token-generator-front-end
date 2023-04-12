@@ -13,6 +13,7 @@ const Base = ({children,sideBarCliked,setSideBarClicked,cartclicked,setCartClick
 
     const logout = () => {
         localStorage.removeItem("customertoken")
+        localStorage.removeItem("CustomerName")
         history.replace("/")
     }
 

@@ -34,8 +34,7 @@ const OwnerSignin = () => {
       })
 
       const owner = await response.json();
-      console.log(owner)
-
+      localStorage.setItem("OwnerName",owner.ownerName)
       localStorage.setItem("ownertoken" , owner.ownerToken)
      if(owner.ownerToken){
       return history.push("/ownerdash")

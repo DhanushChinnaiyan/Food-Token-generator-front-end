@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 import { decodeToken } from 'react-jwt'
-import Base from '../../BASE/Base'
+import Base from '../BASE/Base'
 import CustomerSidebar from '../Sidebar/Sidebar'
 import { useState } from 'react';
 import FoodToken from '../FoodToken/Food'
