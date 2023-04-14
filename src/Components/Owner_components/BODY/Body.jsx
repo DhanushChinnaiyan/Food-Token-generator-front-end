@@ -6,8 +6,9 @@ import Base from '../BASE/Base';
 import OwnerSidebar from '../Sidebar/Sidebar';
 import Foodlist from '../Food/Food';
 import Nopage from '../../NOPAGE/nopage';
+import Customer from '../Customer/Customer';
 
-const OwnerBody = ({ownerFoodsDetails,setOwnerFoodsDetails}) => {
+const OwnerBody = ({ownerFoodsDetails,setOwnerFoodsDetails,customersData, setCustomerData}) => {
   const [sideBarCliked, setSideBarClicked] = useState(false)
     const history = useHistory();
     useEffect(()=>{
@@ -47,9 +48,10 @@ const OwnerBody = ({ownerFoodsDetails,setOwnerFoodsDetails}) => {
 
         </Route>
         <Route exact path="/ownerdash/customers">
-          <div>
-            hi i am customer
-          </div>
+          <Customer
+          customersData={customersData}
+          setCustomerData={setCustomerData}
+          />
 
         </Route>
         <Route path="**">

@@ -10,50 +10,60 @@ import Nopage from "./Components/NOPAGE/nopage";
 import Body from "./Components/Customer_Components/BODY/Body";
 import OwnerBody from "./Components/Owner_components/BODY/Body";
 import MainDash from "./Components/Main Dash/MainDash";
-import {BrowserRouter as Router} from 'react-router-dom'
-
+import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
-const [customersData,setCustomerData] = useState([]);
-const [ownerFoodsDetails,setOwnerFoodsDetails] = useState([]);
+  const [customersData, setCustomerData] = useState([]);
+  const [ownerFoodsDetails, setOwnerFoodsDetails] = useState([]);
 
-useEffect(()=>{
+  useEffect(() => {
+    const getfoodList = async () => {
+      try {
+        const response = await fetch(
+          "https://food-token-generator-backend.vercel.app/owner/food",
+          {
+            method: "GET",
+            headers: {
+              "x-auth-ownertoken": localStorage.getItem("ownertoken"),
+            },
+          }
+        );
 
+        const data = await response.json();
+        setOwnerFoodsDetails(data);
+      } catch (error) {
+        console.log("get food error", error);
+      }
+    };
+    const getCustomer = async () => {
+      try {
+        const customerResponse =await fetch("https://food-token-generator-backend.vercel.app/customer", {
+          method: "GET",
+          headers: {
+            "x-auth-ownertoken": localStorage.getItem("ownertoken"),
+          },
+        });
 
-  const getfoodList = async () => {
-
-    try {
-
-      const response = await fetch("https://food-token-generator-backend.vercel.app/customer/food", {
-        method: "GET",
-        headers: {
-          "x-auth-customertoken": localStorage.getItem("ownertoken")
-
-        }
-      })
-
-      const data = await response.json()
-      setOwnerFoodsDetails(data)
-
-
-    } catch (error) {
-      console.log("get food error", error)
-    }
-  }
-getfoodList()
-
-},[])
+        const data = await customerResponse.json();
+        setCustomerData(data);
+        console.log(data)
+      } catch (error) {
+        console.log("get customer error", error);
+      }
+    };
+    getfoodList();
+    getCustomer();
+  }, []);
 
   return (
     <div className="App">
       {/* customer */}
       <Switch>
-
-        <Route exact path='/'>
-          <MainDash/>
+        <Route exact path="/">
+          <MainDash />
         </Route>
         <Route path="/customersignup">
-          <Signup/>
+          <Signup />
         </Route>
 
         <Route path="/customersignin">
@@ -64,13 +74,12 @@ getfoodList()
           <Customerforgot />
         </Route>
 
-        <Route path='/customerdash'>
-          <Body/>
+        <Route path="/customerdash">
+          <Body />
         </Route>
-        
 
-      {/* OWNER */}
-   
+        {/* OWNER */}
+
         <Route path="/ownersignin">
           <OwnerSignin />
         </Route>
@@ -78,17 +87,17 @@ getfoodList()
         <Route path="/ownerforgotpassword">
           <Ownerforgot />
         </Route>
-        <Route path='/ownerdash'>
+        <Route path="/ownerdash">
           <OwnerBody
-          ownerFoodsDetails={ownerFoodsDetails}
-          setOwnerFoodsDetails={setOwnerFoodsDetails}
+            ownerFoodsDetails={ownerFoodsDetails}
+            setOwnerFoodsDetails={setOwnerFoodsDetails}
+            customersData={customersData}
+            setCustomerData={setCustomerData}
           />
-     
-          
         </Route>
 
         <Route path="**">
-          <Nopage/>
+          <Nopage />
         </Route>
       </Switch>
     </div>
