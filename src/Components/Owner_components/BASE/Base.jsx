@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, Button, Toolbar } from '@mui/material'
 import { useHistory } from 'react-router-dom';
 import { GiHamburgerMenu } from 'react-icons/gi'
+import OwnerSidebar from '../Sidebar/Sidebar';
 
 
 
@@ -34,7 +35,7 @@ const Base = ({children,setSideBarClicked,sideBarCliked}) => {
                         <GiHamburgerMenu onClick={menuIcon} size="calc(15px + 1vw)" style={{ cursor: "pointer" }} />
                     </div>
 
-                    <div style={{ flex: 1 }}>
+                    <div style={{ flex: 2,textAlign:"center" }}>
                         WELCOME {localStorage.getItem("OwnerName").toUpperCase()}
                     </div>
                     <div style={{ flex: 1, display: 'flex', justifyContent: "flex-end" ,gap:"calc(5px + 1vw)"}}>
@@ -51,6 +52,11 @@ const Base = ({children,setSideBarClicked,sideBarCliked}) => {
                 </Toolbar>
             </AppBar>
 
+            {
+      sideBarCliked && <OwnerSidebar
+      setSideBarClicked={setSideBarClicked}
+      />
+     }
 
             <div style={{marginTop:"7.8vh"}}>
                 {children}

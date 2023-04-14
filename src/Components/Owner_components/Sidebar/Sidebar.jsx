@@ -1,39 +1,36 @@
 import React from 'react'
 import './Sidebar.css'
-import {Link} from 'react-scroll'
+import { useHistory } from 'react-router-dom'
+import { AppBar, Button } from '@mui/material'
 
 
-const OwnerSidebar = ({setSideBarClicked}) => {
+const OwnerSidebar = ({ setSideBarClicked }) => {
+    const history= useHistory()
     return (
-        <div className='OwnerSidebarMainDiv'>
-            <div className="foodDiv">
-                <div className="foodTittle">
-                    CATEGORIES
-                </div>
-                <div className="categories">
-                    <ul style={{listStyle:"none"}}>
-                        <Link spy={true} to="biriyani" smooth={true} activeClass="activclass">
-                            <li onClick={()=>setSideBarClicked(false)}>BIRIYANI</li>
-                        </Link>
+            <AppBar style={{
+                 height: "95vh",
+                 width: "calc(80px + 5vw)",
+                 padding: "calc(10px + 1vw)",
+                 overflowY: "auto",
+                 display: "flex",
+                 flexDirection: "column",
+                 gap: "calc(10px + 1vw)",
+                 fontWeight: "bold",
+                 backgrounColor:" rgb(8, 119, 204)",
+                 color: "aliceblue",
+                 left:0,
+                 top:"7.5vh",
+                 position:'fixed'
+            }} >
+                           <Button  color='inherit' style={{ fontSize: "calc(9px + 0.5vw)", fontWeight: "bold" }} onClick={() => {history.push("/ownerdash");setSideBarClicked(false)}}>INCOME</Button>
 
-                        <Link spy={true} to="burger" smooth={true} activeClass="activclass">
-                            <li onClick={()=>setSideBarClicked(false)}>BURGER</li>
-                        </Link>
-                        <Link spy={true} to="shawarma" smooth={true} activeClass="activclass">
-                            <li onClick={()=>setSideBarClicked(false)}>SHAWARMA</li>
-                        </Link>
-                        <Link spy={true} to="noodles" smooth={true} activeClass="activclass">
-                            <li onClick={()=>setSideBarClicked(false)}>NOODLES</li>
-                        </Link>
+   <Button color='inherit' style={{ fontSize: "calc(9px + 0.5vw)", fontWeight: "bold" }}  onClick={() => {history.push("/ownerdash/orders");setSideBarClicked(false)}}>ORDERS</Button>
 
+   <Button color='inherit' style={{ fontSize: "calc(9px + 0.5vw)", fontWeight: "bold" }} onClick={() => {history.push("/ownerdash/foods");setSideBarClicked(false)}}>FOODS</Button>
 
+   <Button color='inherit' style={{ fontSize: "calc(9px + 0.5vw)", fontWeight: "bold" }}  onClick={() => {history.push("/ownerdash/customers");setSideBarClicked(false)}}>CUSTOMERS</Button>
 
-                    </ul>
-                    <div>We will add more categories soon</div>
-                </div>
-            </div>
-
-        </div>
+        </AppBar>
     )
 }
 

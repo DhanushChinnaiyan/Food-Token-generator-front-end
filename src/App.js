@@ -5,14 +5,44 @@ import Signin from "./Components/Customer_Components/SignIn/Signin";
 import Signup from "./Components/Customer_Components/Signup/Signup";
 import Ownerforgot from "./Components/Owner_components/Forgot/ForgotPassword";
 import OwnerSignin from "./Components/Owner_components/SignIn/Signin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Nopage from "./Components/NOPAGE/nopage";
 import Body from "./Components/Customer_Components/BODY/Body";
 import OwnerBody from "./Components/Owner_components/BODY/Body";
 import MainDash from "./Components/Main Dash/MainDash";
+import {BrowserRouter as Router} from 'react-router-dom'
+
 
 function App() {
-const [customersData,setCustomerData] = useState("")
+const [customersData,setCustomerData] = useState([]);
+const [ownerFoodsDetails,setOwnerFoodsDetails] = useState([]);
+
+useEffect(()=>{
+
+
+  const getfoodList = async () => {
+
+    try {
+
+      const response = await fetch("https://food-token-generator-backend.vercel.app/customer/food", {
+        method: "GET",
+        headers: {
+          "x-auth-customertoken": localStorage.getItem("ownertoken")
+
+        }
+      })
+
+      const data = await response.json()
+      setOwnerFoodsDetails(data)
+
+
+    } catch (error) {
+      console.log("get food error", error)
+    }
+  }
+getfoodList()
+
+},[])
 
   return (
     <div className="App">
@@ -49,7 +79,12 @@ const [customersData,setCustomerData] = useState("")
           <Ownerforgot />
         </Route>
         <Route path='/ownerdash'>
-          <OwnerBody/>
+          <OwnerBody
+          ownerFoodsDetails={ownerFoodsDetails}
+          setOwnerFoodsDetails={setOwnerFoodsDetails}
+          />
+     
+          
         </Route>
 
         <Route path="**">
