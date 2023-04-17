@@ -31,7 +31,7 @@ const Body = () => {
 
     const customer = decodeToken(customerToken);
     if (!customer) {
-      localStorage.removeItem(customerToken)
+      localStorage.removeItem("customertoken")
       history.push("/customersignin")
     }
 

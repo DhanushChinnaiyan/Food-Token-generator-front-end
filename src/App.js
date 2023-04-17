@@ -13,47 +13,7 @@ import MainDash from "./Components/Main Dash/MainDash";
 import { BrowserRouter as Router } from "react-router-dom";
 
 function App() {
-  const [customersData, setCustomerData] = useState([]);
-  const [ownerFoodsDetails, setOwnerFoodsDetails] = useState([]);
-
-  useEffect(() => {
-    const getfoodList = async () => {
-      try {
-        const response = await fetch(
-          "https://food-token-generator-backend.vercel.app/owner/food",
-          {
-            method: "GET",
-            headers: {
-              "x-auth-ownertoken": localStorage.getItem("ownertoken"),
-            },
-          }
-        );
-
-        const data = await response.json();
-        setOwnerFoodsDetails(data);
-      } catch (error) {
-        console.log("get food error", error);
-      }
-    };
-    const getCustomer = async () => {
-      try {
-        const customerResponse =await fetch("https://food-token-generator-backend.vercel.app/customer", {
-          method: "GET",
-          headers: {
-            "x-auth-ownertoken": localStorage.getItem("ownertoken"),
-          },
-        });
-
-        const data = await customerResponse.json();
-        setCustomerData(data);
-        console.log(data)
-      } catch (error) {
-        console.log("get customer error", error);
-      }
-    };
-    getfoodList();
-    getCustomer();
-  }, []);
+ 
 
   return (
     <div className="App">
@@ -89,10 +49,6 @@ function App() {
         </Route>
         <Route path="/ownerdash">
           <OwnerBody
-            ownerFoodsDetails={ownerFoodsDetails}
-            setOwnerFoodsDetails={setOwnerFoodsDetails}
-            customersData={customersData}
-            setCustomerData={setCustomerData}
           />
         </Route>
 
