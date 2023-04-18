@@ -15,6 +15,7 @@ const OwnerBody = () => {
   const [customersData, setCustomerData] = useState([]);
   const [ownerFoodsDetails, setOwnerFoodsDetails] = useState([]);
   const [OrdersList,setOrdersList] = useState([])
+  const [profit,setProfit] = useState([])
 
     const history = useHistory();
     useEffect(()=>{
@@ -42,7 +43,7 @@ const OwnerBody = () => {
         };
         const getCustomer = async () => {
           try {
-            const customerResponse =await fetch("https://food-token-generator-backend.vercel.app/customer", {
+            const customerResponse =await fetch("https://food-token-generator-backend.vercel.app/customers", {
               method: "GET",
               headers: {
                 "x-auth-ownertoken": localStorage.getItem("ownertoken"),
@@ -74,7 +75,27 @@ const OwnerBody = () => {
         }
       }
 
+      const getProfitList = async() => {
 
+        try {
+
+          const response = await fetch("https://food-token-generator-backend.vercel.app/profit",{
+            method:"GET",
+            headers:{
+              "x-auth-ownertoken":localStorage.getItem("ownertoken")
+            }
+          })
+
+          const data = await response.json()
+          setProfit(data)
+
+          
+        } catch (error) {
+          console.log("get profit list error ",error)
+        }
+      }
+
+      getProfitList();
         getfoodList();
         getCustomer();
         getOrdersList();
@@ -94,7 +115,10 @@ const OwnerBody = () => {
       <Switch>
         
         <Route exact path="/ownerdash">
-          <Income/>
+          <Income
+          profit={profit}
+          setProfit={setProfit}
+          />
 
         </Route>
 
@@ -102,6 +126,8 @@ const OwnerBody = () => {
           <Orders
           OrdersList={OrdersList}
           setOrdersList={setOrdersList}
+          profit={profit}
+          setProfit={setProfit}
           />
 
         </Route>

@@ -3,9 +3,9 @@ import './Orders.css'
 import { Button, Card, CardContent, CardMedia, TextField, Typography } from '@mui/material'
 import { useFormik } from 'formik'
 
-const Orders = ({ OrdersList, setOrdersList }) => {
+const Orders = ({ OrdersList, setOrdersList,profit,setProfit }) => {
 
-    const [profitList, setProfitList] = useState([])
+    
 
     return (
         <div className="orders">
@@ -29,8 +29,8 @@ const Orders = ({ OrdersList, setOrdersList }) => {
                                 customerName={element.customerName}
                                 setOrdersList={setOrdersList}
                                 OrdersList={OrdersList}
-                                setProfitList={setProfitList}
-                                profitList={profitList}
+                                setProfit={setProfit}
+                                profit={profit}
                             />
                         )
                     })
@@ -43,7 +43,7 @@ const Orders = ({ OrdersList, setOrdersList }) => {
 export default Orders
 
 
-const OrdersCard = ({ profitList, setProfitList, setOrdersList, OrdersList, foodImage, foodName, foodPrice, id, noOfFood, customerId, customerName }) => {
+const OrdersCard = ({ profit, setProfit, setOrdersList, OrdersList, foodImage, foodName, foodPrice, id, noOfFood, customerId, customerName }) => {
 
     const [deliveryClicked, setDeliveryClicked] = useState(false)
 
@@ -74,8 +74,7 @@ const OrdersCard = ({ profitList, setProfitList, setOrdersList, OrdersList, food
             })
 
             const profitData = await profitresponse.json()
-            setProfitList(profitData)
-            console.log(profitData)
+            setProfit([...profit,profitData])
 
             
             const response = await fetch(`https://food-token-generator-backend.vercel.app/ownertoken/${token}`, {

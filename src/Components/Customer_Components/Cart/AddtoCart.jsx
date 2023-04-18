@@ -34,9 +34,9 @@ const AddtoCart = ({setFoodTokenlist,foodTokenlist,cartlist,setCartlist,setSideB
 
   const increaseproduct = async(id,foodCount) => {
     try {
+      console.log(foodCount)
       setCount(foodCount+1)
       console.log(count)
-      
       const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/edit/${id}`,{
         method:"PUT",
         body:JSON.stringify({
@@ -54,8 +54,14 @@ const AddtoCart = ({setFoodTokenlist,foodTokenlist,cartlist,setCartlist,setSideB
 
       if(data){
         const editedCart = cartlist.findIndex((element)=>element._id === id)
-        cartlist[editedCart]={foodCount:count}
-                                
+        cartlist[editedCart]={
+          _id:cartlist[editedCart]._id,
+          foodName:cartlist[editedCart].foodName,
+          foodImage:cartlist[editedCart].foodImage,
+          foodCount:count,
+          totalFoodPrice:cartlist[editedCart].totalFoodPrice*count,
+        }
+            console.log(cartlist[editedCart])                    
        setCartlist([...cartlist])
       }
       
@@ -108,6 +114,8 @@ return (
     <div className="addtocartDiv">
       {
         cartlist.map((element, index) => {
+
+          // console.log(element._id)
           return (
             <Card key={index} className="addtocart" style={{boxShadow:"inset 0 0 calc(10px + 2vw) rgb(122, 195, 251)",borderRadius:"calc(5px + 1vw)"}}>
              
@@ -123,7 +131,7 @@ return (
                   <span>{element?.foodName}</span>
                 </Typography>
                 <Typography gutterBottom  component="div">
-               <span>Add More: </span> <span>{element?.foodCount}</span><Button onClick={()=>increaseproduct(element._id,element.foodCount,element.foodImage,element.foodName,element.foodPrice,element.totalFoodPrice)} style={{padding:0,fontSize:"calc(10px + 2vw)"}}>+</Button>
+               <span>Add More: </span> <span>{element?.foodCount}</span><Button onClick={()=>increaseproduct(element._id,element.foodCount)} style={{padding:0,fontSize:"calc(10px + 2vw)"}}>+</Button>
                 </Typography>
                 <Typography gutterBottom  component="div">
                 <span>Price:</span> <span>{element?.totalFoodPrice}.RS</span>
