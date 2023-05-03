@@ -5,12 +5,12 @@ import Signin from "./Components/Customer_Components/SignIn/Signin";
 import Signup from "./Components/Customer_Components/Signup/Signup";
 import Ownerforgot from "./Components/Owner_components/Forgot/ForgotPassword";
 import OwnerSignin from "./Components/Owner_components/SignIn/Signin";
-import { useEffect, useState } from "react";
+
 import Nopage from "./Components/NOPAGE/nopage";
 import Body from "./Components/Customer_Components/BODY/Body";
 import OwnerBody from "./Components/Owner_components/BODY/Body";
 import MainDash from "./Components/Main Dash/MainDash";
-import { BrowserRouter as Router } from "react-router-dom";
+
 
 function App() {
  
