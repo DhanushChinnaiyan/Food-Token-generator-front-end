@@ -141,7 +141,7 @@ const Addfood = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 }
 
 
-const Biriyani = ({ ownerFoodsDetails,setOwnerFoodsDetails }) => {
+const Biriyani = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 
     return (
         <div className="foodDiv">
@@ -173,7 +173,7 @@ const Biriyani = ({ ownerFoodsDetails,setOwnerFoodsDetails }) => {
 
 
 
-const Burger = ({ ownerFoodsDetails,setOwnerFoodsDetails }) => {
+const Burger = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 
     return (
         <div className="foodDiv">
@@ -205,7 +205,7 @@ const Burger = ({ ownerFoodsDetails,setOwnerFoodsDetails }) => {
 
 
 
-const Shawarma = ({ ownerFoodsDetails,setOwnerFoodsDetails }) => {
+const Shawarma = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 
     return (
         <div className="foodDiv">
@@ -237,7 +237,7 @@ const Shawarma = ({ ownerFoodsDetails,setOwnerFoodsDetails }) => {
 
 
 
-const Noodles = ({ ownerFoodsDetails,setOwnerFoodsDetails }) => {
+const Noodles = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 
     return (
         <div className="foodDiv">
@@ -269,12 +269,12 @@ const Noodles = ({ ownerFoodsDetails,setOwnerFoodsDetails }) => {
 
 
 const FoodCard = ({ ownerFoodsDetails, setOwnerFoodsDetails, foodImage, foodName, foodPrice, id }) => {
-    const [edit,setEdit] = useState(false)
-    
+    const [edit, setEdit] = useState(false)
+
 
 
     const deleteFood = async (id) => {
-       
+
 
         try {
 
@@ -285,9 +285,9 @@ const FoodCard = ({ ownerFoodsDetails, setOwnerFoodsDetails, foodImage, foodName
                 }
             })
 
-            const data = await response.json()
+            await response.json()
             const foodSelection = ownerFoodsDetails.filter((element) => element._id !== id)
-           
+
             setOwnerFoodsDetails(foodSelection)
 
         } catch (error) {
@@ -297,30 +297,30 @@ const FoodCard = ({ ownerFoodsDetails, setOwnerFoodsDetails, foodImage, foodName
 
     return (
         <div>
-            {edit?
-            <EditComponent
-            id={id}
-            ownerFoodsDetails={ownerFoodsDetails}
-            setOwnerFoodsDetails={setOwnerFoodsDetails}
-            setEdit={setEdit}
-            />
-            :
-            <FoodsCard
-            foodImage={foodImage}
-            foodName={foodName}
-            foodPrice={foodPrice}
-            id={id}
-            deleteFood={deleteFood}
-            setEdit={setEdit}
-            />
-}
+            {edit ?
+                <EditComponent
+                    id={id}
+                    ownerFoodsDetails={ownerFoodsDetails}
+                    setOwnerFoodsDetails={setOwnerFoodsDetails}
+                    setEdit={setEdit}
+                />
+                :
+                <FoodsCard
+                    foodImage={foodImage}
+                    foodName={foodName}
+                    foodPrice={foodPrice}
+                    id={id}
+                    deleteFood={deleteFood}
+                    setEdit={setEdit}
+                />
+            }
         </div>
-        
+
     )
 }
 
-const FoodsCard = ({foodImage, foodName, foodPrice, id,deleteFood,setEdit}) => {
-    return(
+const FoodsCard = ({ foodImage, foodName, foodPrice, id, deleteFood, setEdit }) => {
+    return (
         <Card className="foodCart" style={{ boxShadow: "inset 0 0 calc(10px + 2vw) rgb(122, 195, 251)", borderRadius: "calc(5px + 0.1vw)" }}>
 
             <CardMedia
@@ -348,7 +348,7 @@ const FoodsCard = ({foodImage, foodName, foodPrice, id,deleteFood,setEdit}) => {
     )
 }
 
-const EditComponent = ({ownerFoodsDetails, setOwnerFoodsDetails,id,setEdit}) => {
+const EditComponent = ({ ownerFoodsDetails, setOwnerFoodsDetails, id, setEdit }) => {
     const foodS = ownerFoodsDetails.findIndex((element) => element._id === id);
     const findedFood = ownerFoodsDetails[foodS]
 
@@ -362,87 +362,87 @@ const EditComponent = ({ownerFoodsDetails, setOwnerFoodsDetails,id,setEdit}) => 
             },
             onSubmit: (editedFood) => {
                 editFood(editedFood)
-                
+
             },
 
         }
     )
     const editFood = async (editedFood) => {
-       
-    
+
+
         try {
 
             const response = await fetch(`https://food-token-generator-backend.vercel.app/owner/edit/${id}`, {
                 method: "PUT",
-                body:JSON.stringify(editedFood),
+                body: JSON.stringify(editedFood),
                 headers: {
-                    "Content-Type":"application/json",
+                    "Content-Type": "application/json",
                     "x-auth-ownertoken": localStorage.getItem("ownertoken")
                 }
             })
 
-            const data = await response.json()
+            await response.json()
             const foodSelection = ownerFoodsDetails.findIndex((element) => element._id === id)
-           ownerFoodsDetails[foodSelection] = editedFood
+            ownerFoodsDetails[foodSelection] = editedFood
             setOwnerFoodsDetails([...ownerFoodsDetails])
             setEdit(false)
         } catch (error) {
             console.log("food delete error ", error)
         }
     }
-    return(
+    return (
         <div className="fooddiv">
-        <form className='addfood' onSubmit={handleSubmit}>
-            <TextField
-                required id="outlined-basic"
-                label="IMG URL"
-                variant="outlined"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.foodImage}
-                name="foodImage"
-            />
-            <FormControl required fullWidth>
-                <InputLabel id="demo-simple-select-label">FOOD CATEGORY</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="FOOD CATEGORY"
+            <form className='addfood' onSubmit={handleSubmit}>
+                <TextField
+                    required id="outlined-basic"
+                    label="IMG URL"
+                    variant="outlined"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.foodCategory}
-                    name="foodCategory"
-                >
-                    <MenuItem value={"biriyani"}>BIRIYANI</MenuItem>
-                    <MenuItem value={"burger"}>BURGER</MenuItem>
-                    <MenuItem value={"shawarma"}>SHAWARMA</MenuItem>
-                    <MenuItem value={"noodles"}>NOODLES</MenuItem>
-                </Select>
-            </FormControl>
-            <TextField
-                required id="outlined-basic"
-                label="FOOD NAME"
-                variant="outlined"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.foodName}
-                name="foodName"
+                    value={values.foodImage}
+                    name="foodImage"
+                />
+                <FormControl required fullWidth>
+                    <InputLabel id="demo-simple-select-label">FOOD CATEGORY</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="FOOD CATEGORY"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.foodCategory}
+                        name="foodCategory"
+                    >
+                        <MenuItem value={"biriyani"}>BIRIYANI</MenuItem>
+                        <MenuItem value={"burger"}>BURGER</MenuItem>
+                        <MenuItem value={"shawarma"}>SHAWARMA</MenuItem>
+                        <MenuItem value={"noodles"}>NOODLES</MenuItem>
+                    </Select>
+                </FormControl>
+                <TextField
+                    required id="outlined-basic"
+                    label="FOOD NAME"
+                    variant="outlined"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.foodName}
+                    name="foodName"
 
-            />
-            <TextField
-                required
-                id="outlined-basic"
-                label="FOOD PRICE"
-                variant="outlined"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.foodPrice}
-                name="foodPrice"
-                type='number'
-            />
-            <Button variant="contained" color='success' type='submit' >UPDATE FOOD</Button>
-            <Button variant="contained" color='error' onClick={()=>setEdit(false)} >calcel</Button>
-        </form>
-    </div>
+                />
+                <TextField
+                    required
+                    id="outlined-basic"
+                    label="FOOD PRICE"
+                    variant="outlined"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.foodPrice}
+                    name="foodPrice"
+                    type='number'
+                />
+                <Button variant="contained" color='success' type='submit' >UPDATE FOOD</Button>
+                <Button variant="contained" color='error' onClick={() => setEdit(false)} >calcel</Button>
+            </form>
+        </div>
     )
 }

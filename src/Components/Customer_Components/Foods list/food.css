@@ -13,8 +13,10 @@
 }
 
 .foods{
+    /* border: 1px solid black; */
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
     gap: 1rem;
     padding: calc(10px + 1vw);
 }

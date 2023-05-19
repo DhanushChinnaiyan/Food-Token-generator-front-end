@@ -1,6 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
-import { Route, Switch, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { decodeToken } from 'react-jwt'
 import Base from '../BASE/Base'
 import CustomerSidebar from '../Sidebar/Sidebar'
@@ -27,12 +27,12 @@ const Body = () => {
 
 
     const customerToken = localStorage.getItem("customertoken")
-    if (!customerToken) return history.replace("/customersignin")
+    if (!customerToken) return history.replace("/")
 
     const customer = decodeToken(customerToken);
     if (!customer) {
       localStorage.removeItem("customertoken")
-      history.push("/customersignin")
+      history.push("/")
     }
 
 
@@ -90,7 +90,7 @@ const Body = () => {
     getfoodList()
 
 
-  }, [cartclicked, tokenClicked])
+  }, [cartclicked, tokenClicked, history])
 
 
   return (

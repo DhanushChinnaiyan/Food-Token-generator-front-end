@@ -11,7 +11,7 @@ const OwnerSignin = () => {
   const [message,setMessage]=useState("")
   const history = useHistory()
 
-  const { values, handleChange, handleSubmit, handleBlur, error, touched } = useFormik({
+  const { values, handleChange, handleSubmit, handleBlur} = useFormik({
     initialValues: {
       email: "",
       password: ""

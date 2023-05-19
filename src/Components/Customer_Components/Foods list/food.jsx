@@ -182,7 +182,6 @@ const Noodles = ({ foodList, cartclicked, setCartClicked, setCartlist, cartlist 
 
 const FoodCard = ({ cartlist, setCartlist, setCartClicked, foodImage, foodName, foodPrice, cartclicked, id }) => {
 
-    const [cart, setCart] = useState(true)
 
     const addCart = async (id) => {
         try {
@@ -200,7 +199,8 @@ const FoodCard = ({ cartlist, setCartlist, setCartClicked, foodImage, foodName, 
             const data = response.json();
             setCartlist([...cartlist, data])
             setCartClicked(true)
-            setCart(false)
+            localStorage.setItem(`food${id}`, id)
+            
 
 
         } catch (error) {
@@ -212,9 +212,9 @@ const FoodCard = ({ cartlist, setCartlist, setCartClicked, foodImage, foodName, 
 
     const removeCart = async (id) => {
 
-        setCart(true)
+         
         const findCart = cartlist.filter((element) => element.foodId === id)
-        console.log(findCart[0]._id)
+        console.log(findCart)
         try {
 
             const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/delete/${findCart[0]._id}`, {
@@ -224,7 +224,9 @@ const FoodCard = ({ cartlist, setCartlist, setCartClicked, foodImage, foodName, 
                 }
             });
 
-            const data = response.json();
+            const data = await response.json();
+
+            localStorage.removeItem(`food${id}`)
 
             if (data) {
                 const selectaddtocart = cartlist.filter((element) => element._id !== findCart[0]._id)
@@ -236,7 +238,6 @@ const FoodCard = ({ cartlist, setCartlist, setCartClicked, foodImage, foodName, 
             console.log("delete addtocart error", error)
         }
     }
-
 
     return (
         <Card className="foodCart" style={{ boxShadow: "inset 0 0 calc(10px + 2vw) rgb(122, 195, 251)", borderRadius: "calc(5px + 0.1vw)" }}>
@@ -256,10 +257,11 @@ const FoodCard = ({ cartlist, setCartlist, setCartClicked, foodImage, foodName, 
                     <span>Price :</span> <span>{foodPrice} .RS</span>
                 </Typography>
 
-                {cart ?
-                    <div><Button variant='contained' color='success' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold", position: "inherit" }} onClick={() => { cartclicked === false && addCart(id) }} size="small">AddTo Cart</Button></div>
-                    :
+                {localStorage.getItem(`food${id}`) === id ?
                     <div><Button variant='contained' color='error' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold", position: "inherit" }} onClick={() => { cartclicked === false && removeCart(id) }} size="small">Remove From Cart</Button></div>
+                    :
+                    <div><Button variant='contained' color='success' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold", position: "inherit" }} onClick={() => { cartclicked === false && addCart(id) }} size="small">AddTo Cart</Button></div>
+
                 }
             </CardContent>
         </Card>

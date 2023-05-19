@@ -11,6 +11,7 @@ const Base = ({children,setSideBarClicked,sideBarCliked}) => {
    
     const history = useHistory()
 
+    const ownerName = localStorage.getItem("OwnerName")
 
     const logout = () => {
         localStorage.removeItem("ownertoken")
@@ -36,7 +37,7 @@ const Base = ({children,setSideBarClicked,sideBarCliked}) => {
                     </div>
 
                     <div style={{ flex: 2,textAlign:"center" }}>
-                        WELCOME {localStorage.getItem("OwnerName").toUpperCase()}
+                        WELCOME {ownerName&&ownerName.toUpperCase()}
                     </div>
                     <div style={{ flex: 1, display: 'flex', justifyContent: "flex-end" ,gap:"calc(5px + 1vw)"}}>
 

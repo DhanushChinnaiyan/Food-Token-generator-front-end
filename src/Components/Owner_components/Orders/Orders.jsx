@@ -84,7 +84,7 @@ const OrdersCard = ({ profit, setProfit, setOrdersList, OrdersList, foodImage, f
                 }
             })
 
-            const data = await response.json()
+          await response.json()
 
             const deletedToken = OrdersList.filter((element) => element._id !== token)
             setOrdersList(deletedToken)

@@ -25,7 +25,7 @@ if(foodTokenlist.length === 0) {
         }
       });
 
-      const data =response.json();
+      await response.json();
 
       const selectToken = foodTokenlist.filter((element)=>element._id !== id)
       setFoodTokenlist(selectToken)

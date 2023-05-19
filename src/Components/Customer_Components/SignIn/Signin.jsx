@@ -13,10 +13,10 @@ import { useState } from 'react';
 
 const Signin = () => {
 
-  const [message,setMessage]=useState("")
+  const [message, setMessage] = useState("")
   const history = useHistory()
 
-  const { values, handleChange, handleSubmit, handleBlur, error, touched } = useFormik({
+  const { values, handleChange, handleSubmit, handleBlur } = useFormik({
     initialValues: {
       email: "",
       password: ""
@@ -41,14 +41,14 @@ const Signin = () => {
       const customer = await response.json();
       console.log(customer)
 
-      localStorage.setItem("customertoken" , customer.customerToken)
-     if(customer.customerToken){
-     localStorage.setItem("CustomerName",customer.customerName)
-      return history.push("/customerdash")
-     }
-     else{
-      setMessage(customer.message)
-     }
+      localStorage.setItem("customertoken", customer.customerToken)
+      if (customer.customerToken) {
+        localStorage.setItem("CustomerName", customer.customerName)
+        return history.push("/customerdash")
+      }
+      else {
+        setMessage(customer.message)
+      }
 
 
     } catch (error) {
@@ -91,15 +91,15 @@ const Signin = () => {
           name='password'
         />
         <Button type='submit' variant='contained' color='success'>SIGNIN NOW</Button>
-        <div className="messagediv" style={{color:"red"}}>{message}</div>
+        <div className="messagediv" style={{ color: "red" }}>{message}</div>
         <div className="links">
-          <Link style={{cursor:"pointer"}} onClick={()=>history.push("/customerforgotpassword")} underline="hover">
+          <Link style={{ cursor: "pointer" }} onClick={() => history.push("/customerforgotpassword")} underline="hover">
             Forgot password?
           </Link>
-          <Link style={{cursor:"pointer"}} onClick={()=>history.push("/customersignup")} underline="hover">
+          <Link style={{ cursor: "pointer" }} onClick={() => history.push("/customersignup")} underline="hover">
             Don't have an acoount? Signup
           </Link>
-         
+
         </div>
 
       </Box>

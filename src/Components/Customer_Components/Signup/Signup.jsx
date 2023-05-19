@@ -13,15 +13,15 @@ import { useState } from 'react';
 export const customerValidation = yup.object({
   name: yup.string().required(),
   email: yup.string().required(),
-  password: yup.string().required().min(5,"required min 5 character")
+  password: yup.string().required().min(5, "required min 5 character")
 })
 
 const Signup = () => {
 
-  const [message,setMessage]=useState("")
+  const [message, setMessage] = useState("")
   const history = useHistory()
 
-  const {values,handleChange,handleSubmit,handleBlur,error,touched} = useFormik({
+  const { values, handleChange, handleSubmit, handleBlur } = useFormik({
     initialValues: {
       name: "",
       email: "",
@@ -34,36 +34,36 @@ const Signup = () => {
   })
 
 
-const addNewCustomer = async (newcustomer) => {
-  try {
+  const addNewCustomer = async (newcustomer) => {
+    try {
 
-    const response = await fetch("https://food-token-generator-backend.vercel.app/customer/signup", {
-      method: "POST",
-      body: JSON.stringify(newcustomer),
-      headers: {
-        "Content-Type": "application/json"
+      const response = await fetch("https://food-token-generator-backend.vercel.app/customer/signup", {
+        method: "POST",
+        body: JSON.stringify(newcustomer),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+
+      const customer = await response.json();
+
+      if (customer.message === "succefully signed up") {
+        history.push("/customersignin")
+        setMessage("")
+        return
       }
-    })
+      else {
+        setMessage(customer.message)
+      }
 
-    const customer = await response.json();
 
-    if(customer.message === "succefully signed up"){
-     history.push("/customersignin")
-      setMessage("")
-      return
-    }
-    else{
-      setMessage(customer.message)
+
+
+    } catch (error) {
+      console.log("add customer error ", error)
     }
 
-    
-
-
-  } catch (error) {
-    console.log("add customer error ", error)
   }
-
-}
 
 
   return (
@@ -110,10 +110,10 @@ const addNewCustomer = async (newcustomer) => {
           name='password'
         />
         <Button type='submit' variant='contained' color='success'>SIGNUP NOW</Button>
-        
-        <div className="messagediv" style={{color:"red"}}>{message}</div>
-        
-        <Link style={{cursor:"pointer"}} onClick={()=>history.push("/customersignin")} underline="hover">
+
+        <div className="messagediv" style={{ color: "red" }}>{message}</div>
+
+        <Link style={{ cursor: "pointer" }} onClick={() => history.push("/customersignin")} underline="hover">
           Already have an account? Sign in
         </Link>
 

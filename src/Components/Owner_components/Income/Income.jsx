@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './Income.css'
 
 import {
@@ -7,12 +7,11 @@ import {
   CategoryScale,
   LinearScale,
   Tooltip,
-  Legend,
-  elements
+  Legend
 } from 'chart.js'
 
 import { Bar } from 'react-chartjs-2';
-import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Box, MenuItem, TextField } from '@mui/material';
 
 ChartJS.register(
   BarElement,
@@ -36,85 +35,85 @@ const Income = ({ profit }) => {
   const labels = []
   const earnings = []
 
-  {
-    sorting === "WEEK" &&
+
+  sorting === "WEEK" &&
     profit.map((element) => {
-      if (thisYear == element.deliveredDate.slice(0, 4) && thisMonth == element.deliveredDate.slice(5, 7) && week < element.deliveredDate.slice(8, 10)) {
+      if (thisYear === element.deliveredDate.slice(0, 4) && thisMonth === element.deliveredDate.slice(5, 7) && week < element.deliveredDate.slice(8, 10)) {
         if (!labels.includes(element.deliveredDate)) {
           labels.push(element.deliveredDate)
         }
 
       }
-
+      return labels
 
     })
-  }
 
-  {
-    sorting === "MONTH" &&
+
+
+  sorting === "MONTH" &&
     profit.map((element) => {
-      if (thisYear == element.deliveredDate.slice(0, 4) && thisMonth == element.deliveredDate.slice(5, 7)) {
+      if (thisYear === element.deliveredDate.slice(0, 4) && thisMonth === element.deliveredDate.slice(5, 7)) {
         if (!labels.includes(element.deliveredDate)) {
           labels.push(element.deliveredDate)
         }
 
       }
-
+      return labels
 
     })
-  }
-  {
-    sorting === "YEAR" &&
+
+
+  sorting === "YEAR" &&
     profit.map((element) => {
-      if (thisYear == element.deliveredDate.slice(0, 4)) {
-        if (!labels.includes(element.deliveredDate.slice(0,7))) {
-          labels.push(element.deliveredDate.slice(0,7))
+      if (thisYear === element.deliveredDate.slice(0, 4)) {
+        if (!labels.includes(element.deliveredDate.slice(0, 7))) {
+          labels.push(element.deliveredDate.slice(0, 7))
         }
 
       }
 
-
+      return labels
     })
-  }
+
 
   if (sorting === "WEEK" || sorting === "MONTH") {
     for (let index = 0; index < labels.length; index++) {
       let price = 0;
       profit.map((element) => {
-        if (labels[index] == element.deliveredDate) {
+        if (labels[index] === element.deliveredDate) {
           price = +element.foodPrice + price
         }
-
+        return price
 
       })
       earnings.push(price)
     }
- 
-for (let index = 0; index < earnings.length; index++) {
-  totalPrice=totalPrice+earnings[index]
-  
-}
 
-    
-  }else if (sorting === "YEAR"){
+    for (let index = 0; index < earnings.length; index++) {
+      totalPrice = totalPrice + earnings[index]
+
+    }
+
+
+  } else if (sorting === "YEAR") {
     for (let index = 0; index < labels.length; index++) {
       let price = 0;
       profit.map((element) => {
-        if (labels[index] == element.deliveredDate.slice(0,7)) {
+        if (labels[index] === element.deliveredDate.slice(0, 7)) {
           price = +element.foodPrice + price
         }
-
+        return price
 
       })
       earnings.push(price)
 
+    }
+    for (let index = 0; index < earnings.length; index++) {
+      totalPrice = totalPrice + earnings[index]
+
+    }
+
   }
-  for (let index = 0; index < earnings.length; index++) {
-    totalPrice=totalPrice+earnings[index]
-    
-  }
- 
-}
 
 
 
