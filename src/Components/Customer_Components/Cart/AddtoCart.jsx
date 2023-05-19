@@ -24,7 +24,6 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
 
       await response.json();
       localStorage.removeItem(`food${foodId}`)
-      console.log(`food${foodId}`)
       const selectaddtocart = cartlist.filter((element) => element._id !== id)
       setCartlist(selectaddtocart)
 

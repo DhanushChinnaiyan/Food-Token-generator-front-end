@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './food.css'
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -214,7 +214,7 @@ const FoodCard = ({ cartlist, setCartlist, setCartClicked, foodImage, foodName, 
 
          
         const findCart = cartlist.filter((element) => element.foodId === id)
-        console.log(findCart)
+      
         try {
 
             const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/delete/${findCart[0]._id}`, {

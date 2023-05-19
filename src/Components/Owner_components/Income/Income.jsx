@@ -22,6 +22,7 @@ ChartJS.register(
 )
 
 const Income = ({ profit }) => {
+
   const [sorting, setSorting] = useState("WEEK")
   let totalPrice = 0
 
@@ -29,6 +30,7 @@ const Income = ({ profit }) => {
   const thisMonth = new Date().getMonth() + 1;
   const thisYear = new Date().getFullYear();
 
+  
   const week = today - 7
 
 
@@ -38,7 +40,8 @@ const Income = ({ profit }) => {
 
   sorting === "WEEK" &&
     profit.map((element) => {
-      if (thisYear === element.deliveredDate.slice(0, 4) && thisMonth === element.deliveredDate.slice(5, 7) && week < element.deliveredDate.slice(8, 10)) {
+
+      if (thisYear == element.deliveredDate.slice(0, 4) && thisMonth == element.deliveredDate.slice(5, 7) && week < element.deliveredDate.slice(8, 10)) {
         if (!labels.includes(element.deliveredDate)) {
           labels.push(element.deliveredDate)
         }
@@ -52,7 +55,7 @@ const Income = ({ profit }) => {
 
   sorting === "MONTH" &&
     profit.map((element) => {
-      if (thisYear === element.deliveredDate.slice(0, 4) && thisMonth === element.deliveredDate.slice(5, 7)) {
+      if (thisYear == element.deliveredDate.slice(0, 4) && thisMonth == element.deliveredDate.slice(5, 7)) {
         if (!labels.includes(element.deliveredDate)) {
           labels.push(element.deliveredDate)
         }
@@ -65,7 +68,7 @@ const Income = ({ profit }) => {
 
   sorting === "YEAR" &&
     profit.map((element) => {
-      if (thisYear === element.deliveredDate.slice(0, 4)) {
+      if (thisYear == element.deliveredDate.slice(0, 4)) {
         if (!labels.includes(element.deliveredDate.slice(0, 7))) {
           labels.push(element.deliveredDate.slice(0, 7))
         }
