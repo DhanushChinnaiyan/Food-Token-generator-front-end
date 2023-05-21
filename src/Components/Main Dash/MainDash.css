@@ -11,7 +11,7 @@
 
 .companyName{
     font-weight: bolder;
-    font-size: calc(22px + 2vw);
+    font-size: calc(18px + 2vw);
     margin-top: calc(35px + 2vw);
     margin-bottom: calc(35px + 2vw);
     background: linear-gradient(to bottom,rgb(223, 4, 4) 20%,rgb(85, 18, 18));

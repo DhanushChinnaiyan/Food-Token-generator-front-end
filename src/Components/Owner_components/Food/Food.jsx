@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Food.css'
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
@@ -10,29 +10,60 @@ import { useFormik } from 'formik';
 
 
 
-const Foodlist = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
+const Foodlist = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {   
+    const [editbtnClicked,setEditbtnClicked] = useState(false)
+         const id = localStorage.getItem("id")
+
+         useEffect(()=>{
+            localStorage.removeItem("id")
+         },[])
+       
+
     return (
         <div className="body">
-            <Addfood
-                ownerFoodsDetails={ownerFoodsDetails}
-                setOwnerFoodsDetails={setOwnerFoodsDetails}
-            />
-            <Biriyani
-                ownerFoodsDetails={ownerFoodsDetails}
-                setOwnerFoodsDetails={setOwnerFoodsDetails}
-            />
-            <Burger
-                ownerFoodsDetails={ownerFoodsDetails}
-                setOwnerFoodsDetails={setOwnerFoodsDetails}
-            />
-            <Shawarma
-                ownerFoodsDetails={ownerFoodsDetails}
-                setOwnerFoodsDetails={setOwnerFoodsDetails}
-            />
-            <Noodles
-                ownerFoodsDetails={ownerFoodsDetails}
-                setOwnerFoodsDetails={setOwnerFoodsDetails}
-            />
+
+            {editbtnClicked?
+                <EditComponent
+                    id={id}
+                    ownerFoodsDetails={ownerFoodsDetails}
+                    setOwnerFoodsDetails={setOwnerFoodsDetails}
+                    setEditbtnClicked={setEditbtnClicked}
+              
+                />
+                : 
+                <div>
+                    <Addfood
+                        ownerFoodsDetails={ownerFoodsDetails}
+                        setOwnerFoodsDetails={setOwnerFoodsDetails}
+                      
+                    />
+
+                    <Biriyani
+                        ownerFoodsDetails={ownerFoodsDetails}
+                        setOwnerFoodsDetails={setOwnerFoodsDetails}
+                        setEditbtnClicked={setEditbtnClicked}
+                       
+                    />
+                    <Burger
+                        ownerFoodsDetails={ownerFoodsDetails}
+                        setOwnerFoodsDetails={setOwnerFoodsDetails}
+                        setEditbtnClicked={setEditbtnClicked}
+                      
+                    />
+                    <Shawarma
+                        ownerFoodsDetails={ownerFoodsDetails}
+                        setOwnerFoodsDetails={setOwnerFoodsDetails}
+                        setEditbtnClicked={setEditbtnClicked}
+                       
+                    />
+                    <Noodles
+                        ownerFoodsDetails={ownerFoodsDetails}
+                        setOwnerFoodsDetails={setOwnerFoodsDetails}
+                        setEditbtnClicked={setEditbtnClicked}
+                      
+                    />
+                </div>
+            }
         </div>
     )
 }
@@ -141,7 +172,7 @@ const Addfood = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 }
 
 
-const Biriyani = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
+const Biriyani = ({ ownerFoodsDetails, setOwnerFoodsDetails,setEditbtnClicked }) => {
 
     return (
         <div className="foodDiv">
@@ -161,6 +192,8 @@ const Biriyani = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
                                 id={element._id}
                                 ownerFoodsDetails={ownerFoodsDetails}
                                 setOwnerFoodsDetails={setOwnerFoodsDetails}
+                                setEditbtnClicked={setEditbtnClicked}
+                                
                             />
                         )
                     })
@@ -173,7 +206,7 @@ const Biriyani = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 
 
 
-const Burger = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
+const Burger = ({ ownerFoodsDetails, setOwnerFoodsDetails,setEditbtnClicked }) => {
 
     return (
         <div className="foodDiv">
@@ -193,6 +226,8 @@ const Burger = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
                                 id={element._id}
                                 ownerFoodsDetails={ownerFoodsDetails}
                                 setOwnerFoodsDetails={setOwnerFoodsDetails}
+                                setEditbtnClicked={setEditbtnClicked}
+                                
                             />
                         )
                     })
@@ -205,7 +240,7 @@ const Burger = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 
 
 
-const Shawarma = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
+const Shawarma = ({ ownerFoodsDetails, setOwnerFoodsDetails,setEditbtnClicked }) => {
 
     return (
         <div className="foodDiv">
@@ -225,6 +260,8 @@ const Shawarma = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
                                 id={element._id}
                                 ownerFoodsDetails={ownerFoodsDetails}
                                 setOwnerFoodsDetails={setOwnerFoodsDetails}
+                                setEditbtnClicked={setEditbtnClicked}
+                                
                             />
                         )
                     })
@@ -237,7 +274,7 @@ const Shawarma = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 
 
 
-const Noodles = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
+const Noodles = ({ ownerFoodsDetails, setOwnerFoodsDetails,setEditbtnClicked }) => {
 
     return (
         <div className="foodDiv">
@@ -257,6 +294,8 @@ const Noodles = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
                                 id={element._id}
                                 ownerFoodsDetails={ownerFoodsDetails}
                                 setOwnerFoodsDetails={setOwnerFoodsDetails}
+                                setEditbtnClicked={setEditbtnClicked}
+                               
                             />
                         )
                     })
@@ -268,9 +307,7 @@ const Noodles = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 }
 
 
-const FoodCard = ({ ownerFoodsDetails, setOwnerFoodsDetails, foodImage, foodName, foodPrice, id }) => {
-    const [edit, setEdit] = useState(false)
-
+const FoodCard = ({ ownerFoodsDetails, setOwnerFoodsDetails,setEditbtnClicked, foodImage, foodName, foodPrice, id }) => {
 
 
     const deleteFood = async (id) => {
@@ -297,29 +334,32 @@ const FoodCard = ({ ownerFoodsDetails, setOwnerFoodsDetails, foodImage, foodName
 
     return (
         <div>
-            {edit ?
-                <EditComponent
-                    id={id}
-                    ownerFoodsDetails={ownerFoodsDetails}
-                    setOwnerFoodsDetails={setOwnerFoodsDetails}
-                    setEdit={setEdit}
-                />
-                :
-                <FoodsCard
-                    foodImage={foodImage}
-                    foodName={foodName}
-                    foodPrice={foodPrice}
-                    id={id}
-                    deleteFood={deleteFood}
-                    setEdit={setEdit}
-                />
-            }
+
+            <FoodsCard
+                foodImage={foodImage}
+                foodName={foodName}
+                foodPrice={foodPrice}
+                id={id}
+                deleteFood={deleteFood}
+                setEditbtnClicked={setEditbtnClicked}
+              
+            />
+
         </div>
 
     )
 }
 
-const FoodsCard = ({ foodImage, foodName, foodPrice, id, deleteFood, setEdit }) => {
+const FoodsCard = ({ foodImage, foodName, foodPrice, id, deleteFood,setEditbtnClicked}) => {
+
+
+
+    const editbuttonClicked = () => {
+        setEditbtnClicked(true)
+        localStorage.setItem("id",id)
+    }
+
+
     return (
         <Card className="foodCart" style={{ boxShadow: "inset 0 0 calc(10px + 2vw) rgb(122, 195, 251)", borderRadius: "calc(5px + 0.1vw)" }}>
 
@@ -339,7 +379,7 @@ const FoodsCard = ({ foodImage, foodName, foodPrice, id, deleteFood, setEdit }) 
                 </Typography>
 
 
-                <div><Button variant='contained' color='success' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold", position: "inherit" }} onClick={() => setEdit(true)} size="small">Edit food</Button></div>
+                 <div><Button variant='contained' color='success' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold", position: "inherit" }} onClick={editbuttonClicked} size="small">Edit food</Button></div>
 
                 <div style={{ textAlign: "center" }}><Button variant='contained' color='error' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold", position: "inherit" }} onClick={() => { deleteFood(id) }} size="small">Delete</Button></div>
 
@@ -348,13 +388,17 @@ const FoodsCard = ({ foodImage, foodName, foodPrice, id, deleteFood, setEdit }) 
     )
 }
 
-const EditComponent = ({ ownerFoodsDetails, setOwnerFoodsDetails, id, setEdit }) => {
+const EditComponent = ({ ownerFoodsDetails, setOwnerFoodsDetails,id,setEditbtnClicked }) => {
+   
+    
     const foodS = ownerFoodsDetails.findIndex((element) => element._id === id);
     const findedFood = ownerFoodsDetails[foodS]
+    
 
     const { values, handleChange, handleSubmit, handleBlur } = useFormik(
         {
             initialValues: {
+                _id:findedFood._id,
                 foodImage: findedFood.foodImage,
                 foodCategory: findedFood.foodCategory,
                 foodName: findedFood.foodName,
@@ -381,17 +425,24 @@ const EditComponent = ({ ownerFoodsDetails, setOwnerFoodsDetails, id, setEdit })
                 }
             })
 
-            await response.json()
+            await response.json() 
             const foodSelection = ownerFoodsDetails.findIndex((element) => element._id === id)
             ownerFoodsDetails[foodSelection] = editedFood
             setOwnerFoodsDetails([...ownerFoodsDetails])
-            setEdit(false)
+            localStorage.removeItem("id")
+            setEditbtnClicked(false)
+
         } catch (error) {
-            console.log("food delete error ", error)
+            console.log("food edit error ", error)
         }
     }
+
+    const cancelFunction = () => {
+        setEditbtnClicked(false)
+        localStorage.removeItem("id")
+    }
     return (
-        <div className="fooddiv">
+        <div className="fooddiv" id="editComponent">
             <form className='addfood' onSubmit={handleSubmit}>
                 <TextField
                     required id="outlined-basic"
@@ -441,7 +492,7 @@ const EditComponent = ({ ownerFoodsDetails, setOwnerFoodsDetails, id, setEdit })
                     type='number'
                 />
                 <Button variant="contained" color='success' type='submit' >UPDATE FOOD</Button>
-                <Button variant="contained" color='error' onClick={() => setEdit(false)} >calcel</Button>
+                <Button variant="contained" color='error' onClick={cancelFunction} >calcel</Button>
             </form>
         </div>
     )

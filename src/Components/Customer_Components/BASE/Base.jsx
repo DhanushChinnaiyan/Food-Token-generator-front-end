@@ -19,20 +19,17 @@ const Base = ({children,sideBarCliked,setSideBarClicked,cartclicked,setCartClick
 
     const menuIcon =() => {
        setSideBarClicked(!sideBarCliked)
-       console.log(sideBarCliked)
        setCartClicked(false)
        setTokenClicked(false)
 
     }
     const cart =() => {
         setCartClicked(!cartclicked)
-        console.log(cartclicked)
         setSideBarClicked(false)
         setTokenClicked(false)
      }
      const token =() => {
         setTokenClicked(!tokenClicked)
-        console.log(tokenClicked)
         setCartClicked(false)
         setSideBarClicked(false)
      }

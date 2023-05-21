@@ -8,11 +8,11 @@ import CardContent from '@mui/material/CardContent';
 
 
 const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, setSideBarClicked, setCartClicked, setTokenClicked }) => {
-  const [count, setCount] = useState(1)
+
   if (cartlist.length === 0) {
     setCartClicked(false)
   }
-  const handleClick = async (id,foodId) => {
+  const handleClick = async (id, foodId) => {
     try {
 
       const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/delete/${id}`, {
@@ -35,7 +35,7 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
   const increaseproduct = async (id, foodCount) => {
     try {
 
-      setCount(foodCount + 1)
+      const count = foodCount + 1
 
       const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/edit/${id}`, {
         method: "PUT",
@@ -53,14 +53,19 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
 
       if (data) {
         const editedCart = cartlist.findIndex((element) => element._id === id)
+
+        const price = cartlist[editedCart].foodPrice * count
+
+
         cartlist[editedCart] = {
           _id: cartlist[editedCart]._id,
           foodName: cartlist[editedCart].foodName,
           foodImage: cartlist[editedCart].foodImage,
+          foodPrice: cartlist[editedCart].foodPrice,
           foodCount: count,
-          totalFoodPrice: cartlist[editedCart].totalFoodPrice * count,
+          totalFoodPrice: price,
         }
-        console.log(cartlist[editedCart])
+
         setCartlist([...cartlist])
       }
 
@@ -70,7 +75,56 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
 
   }
 
-  const handleBuy = async (id,foodId) => {
+  // decrease the product count
+
+  const decreaseProduct = async (id, foodCount) => {
+   if(foodCount>1){
+    try {
+
+      const count = foodCount - 1
+
+      const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/edit/${id}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          foodCount: count
+        }),
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-customertoken": localStorage.getItem("customertoken"),
+
+        }
+
+      })
+      const data = await response.json();
+
+      if (data) {
+        const editedCart = cartlist.findIndex((element) => element._id === id)
+
+        const price = cartlist[editedCart].foodPrice * count
+
+
+        cartlist[editedCart] = {
+          _id: cartlist[editedCart]._id,
+          foodName: cartlist[editedCart].foodName,
+          foodImage: cartlist[editedCart].foodImage,
+          foodPrice: cartlist[editedCart].foodPrice,
+          foodCount: count,
+          totalFoodPrice: price,
+        }
+
+        setCartlist([...cartlist])
+      }
+
+    } catch (error) {
+      console.log("decreament error", error)
+    }
+   }
+
+  }
+
+  // buy the product
+
+  const handleBuy = async (id, foodId) => {
     try {
       const buyresponse = await fetch(`https://food-token-generator-backend.vercel.app/token/add/${id}`, {
         method: "POST",
@@ -131,13 +185,13 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
                     <span>{element?.foodName}</span>
                   </Typography>
                   <Typography gutterBottom component="div">
-                    <span>Add More: </span> <span>{element?.foodCount}</span><Button onClick={() => increaseproduct(element._id, element.foodCount)} style={{ padding: 0, fontSize: "calc(10px + 2vw)" }}>+</Button>
+                  <Button onClick={() => decreaseProduct(element._id, element.foodCount)} style={{ padding: 0, fontSize: "calc(10px + 2vw)" }}>-</Button> <span>{element?.foodCount}</span><Button onClick={() => increaseproduct(element._id, element.foodCount)} style={{ padding: 0, fontSize: "calc(10px + 2vw)" }}>+</Button>
                   </Typography>
                   <Typography gutterBottom component="div">
                     <span>Price:</span> <span>{element?.totalFoodPrice}.RS</span>
                   </Typography>
-                  <div><Button variant='contained' color='success' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold" }} onClick={() => handleBuy(element?._id,element.foodId)} size="small">buy now</Button>
-                    <Button variant='contained' color='error' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold" }} onClick={() => handleClick(element?._id,element.foodId)} size="small">Romove cart</Button></div>
+                  <div><Button variant='contained' color='success' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold" }} onClick={() => handleBuy(element?._id, element.foodId)} size="small">buy now</Button>
+                    <Button variant='contained' color='error' style={{ fontSize: "calc(8px + 0.1vw)", fontWeight: "bold" }} onClick={() => handleClick(element?._id, element.foodId)} size="small">Romove cart</Button></div>
                 </CardContent>
               </Card>
             )

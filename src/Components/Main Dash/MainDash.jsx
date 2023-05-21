@@ -51,7 +51,7 @@ const MainDash = () => {
     return (
         <div className="maindash">
             <div className="companyName">
-                Welcome Food Company
+            Welcome to the Food Company
             </div>
             <div className="logindiv">
                 <div className="customerdiv">
