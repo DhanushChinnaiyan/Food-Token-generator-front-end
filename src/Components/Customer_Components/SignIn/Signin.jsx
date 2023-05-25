@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Signin.css'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button, Link } from '@mui/material';
+import { Button, CircularProgress, Link } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useState } from 'react';
@@ -13,6 +13,7 @@ import { useState } from 'react';
 
 const Signin = () => {
 
+  const [click, setClick] = useState(false)
   const [message, setMessage] = useState("")
   const history = useHistory()
 
@@ -22,6 +23,8 @@ const Signin = () => {
       password: ""
     },
     onSubmit: (customerSignin) => {
+      setClick(true)
+      setMessage()
       customerlogin(customerSignin)
     }
   })
@@ -39,9 +42,8 @@ const Signin = () => {
       })
 
       const customer = await response.json();
-      console.log(customer)
-
       localStorage.setItem("customertoken", customer.customerToken)
+      setClick(false)
       if (customer.customerToken) {
         localStorage.setItem("CustomerName", customer.customerName)
         return history.push("/customerdash")
@@ -90,7 +92,17 @@ const Signin = () => {
           value={values.password}
           name='password'
         />
-        <Button type='submit' variant='contained' color='success'>SIGNIN NOW</Button>
+
+        {
+          click ?
+            <Box sx={{ display: 'flex', justifyContent: "center" }}>
+              <CircularProgress color="success" size="24.8px" />
+            </Box>
+            :
+
+            <Button type='submit' variant='contained' color='success'>SIGNIN NOW</Button>
+        }
+
         <div className="messagediv" style={{ color: "red" }}>{message}</div>
         <div className="links">
           <Link style={{ cursor: "pointer" }} onClick={() => history.push("/customerforgotpassword")} underline="hover">

@@ -7,8 +7,8 @@ import OwnerSidebar from '../Sidebar/Sidebar';
 
 
 
-const Base = ({children,setSideBarClicked,sideBarCliked}) => {
-   
+const Base = ({ children, setSideBarClicked, sideBarCliked }) => {
+
     const history = useHistory()
 
     const ownerName = localStorage.getItem("OwnerName")
@@ -19,11 +19,11 @@ const Base = ({children,setSideBarClicked,sideBarCliked}) => {
         history.replace("/")
     }
 
-    const menuIcon =() => {
-       setSideBarClicked(!sideBarCliked)
+    const menuIcon = () => {
+        setSideBarClicked(!sideBarCliked)
 
     }
-   
+
 
 
     return (
@@ -36,10 +36,10 @@ const Base = ({children,setSideBarClicked,sideBarCliked}) => {
                         <GiHamburgerMenu onClick={menuIcon} size="calc(15px + 1vw)" style={{ cursor: "pointer" }} />
                     </div>
 
-                    <div style={{ flex: 2,textAlign:"center" }}>
-                        WELCOME {ownerName&&ownerName.toUpperCase()}
+                    <div style={{ flex: 2, textAlign: "center" }}>
+                        WELCOME {ownerName && ownerName.toUpperCase()}
                     </div>
-                    <div style={{ flex: 1, display: 'flex', justifyContent: "flex-end" ,gap:"calc(5px + 1vw)"}}>
+                    <div style={{ flex: 1, display: 'flex', justifyContent: "flex-end", gap: "calc(5px + 1vw)" }}>
 
                         <Button color='inherit' style={{ fontSize: "calc(9px + 0.5vw)", fontWeight: "bold" }}
                             onClick={logout}
@@ -54,12 +54,12 @@ const Base = ({children,setSideBarClicked,sideBarCliked}) => {
             </AppBar>
 
             {
-      sideBarCliked && <OwnerSidebar
-      setSideBarClicked={setSideBarClicked}
-      />
-     }
+                sideBarCliked && <OwnerSidebar
+                    setSideBarClicked={setSideBarClicked}
+                />
+            }
 
-            <div style={{marginTop:"7.8vh"}}>
+            <div style={{ marginTop: "7.8vh" }}>
                 {children}
             </div>
 

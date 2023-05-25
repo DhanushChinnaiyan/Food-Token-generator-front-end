@@ -8,8 +8,10 @@ import Nopage from '../../NOPAGE/nopage';
 import Customer from '../Customer/Customer';
 import Orders from '../Orders/Orders';
 import Income from '../Income/Income';
+import { Box, CircularProgress } from '@mui/material';
 
 const OwnerBody = () => {
+  const [loading, setLoading] = useState(true)
   const [sideBarCliked, setSideBarClicked] = useState(false)
   const [customersData, setCustomerData] = useState([]);
   const [ownerFoodsDetails, setOwnerFoodsDetails] = useState([]);
@@ -96,7 +98,7 @@ const OwnerBody = () => {
 
         const data = await response.json()
         setProfit(data)
-
+        setLoading(false)
 
       } catch (error) {
         console.log("get profit list error ", error)
@@ -108,57 +110,66 @@ const OwnerBody = () => {
     getCustomer();
     getOrdersList();
 
-  }, [history])
+  }, [])
 
 
 
 
   return (
-    <Base
-      sideBarCliked={sideBarCliked}
-      setSideBarClicked={setSideBarClicked}
+    <div>
 
-    >
+      {loading ?
+        <Box sx={{ display: 'flex', justifyContent: "center", height: "50vh", alignItems: "center" }}>
+          <CircularProgress color="primary" size="40px" />
+        </Box>
+        :
+        <Base
+          sideBarCliked={sideBarCliked}
+          setSideBarClicked={setSideBarClicked}
 
-      <Switch>
+        >
 
-        <Route exact path="/ownerdash">
-          <Income
-            profit={profit}
-            setProfit={setProfit}
-          />
+          <Switch>
 
-        </Route>
+            <Route exact path="/ownerdash">
+              <Income
+                profit={profit}
+                setProfit={setProfit}
+              />
 
-        <Route exact path="/ownerdash/orders">
-          <Orders
-            OrdersList={OrdersList}
-            setOrdersList={setOrdersList}
-            profit={profit}
-            setProfit={setProfit}
-          />
+            </Route>
 
-        </Route>
-        <Route exact path="/ownerdash/foods">
-          <Foodlist
-            ownerFoodsDetails={ownerFoodsDetails}
-            setOwnerFoodsDetails={setOwnerFoodsDetails}
-          />
+            <Route exact path="/ownerdash/orders">
+              <Orders
+                OrdersList={OrdersList}
+                setOrdersList={setOrdersList}
+                profit={profit}
+                setProfit={setProfit}
+              />
 
-        </Route>
-        <Route exact path="/ownerdash/customers">
-          <Customer
-            customersData={customersData}
-            setCustomerData={setCustomerData}
-          />
+            </Route>
+            <Route exact path="/ownerdash/foods">
+              <Foodlist
+                ownerFoodsDetails={ownerFoodsDetails}
+                setOwnerFoodsDetails={setOwnerFoodsDetails}
+              />
 
-        </Route>
-        <Route path="**">
-          <Nopage />
-        </Route>
-      </Switch>
+            </Route>
+            <Route exact path="/ownerdash/customers">
+              <Customer
+                customersData={customersData}
+                setCustomerData={setCustomerData}
+              />
 
-    </Base>
+            </Route>
+            <Route path="**">
+              <Nopage />
+            </Route>
+          </Switch>
+
+        </Base>
+      }
+    </div>
   )
 }
 

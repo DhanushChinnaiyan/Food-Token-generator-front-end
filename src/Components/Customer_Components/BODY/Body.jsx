@@ -9,10 +9,12 @@ import FoodToken from '../FoodToken/Food'
 import AddtoCart from '../Cart/AddtoCart'
 import Food from '../Foods list/food'
 import './body.css'
+import { Box, CircularProgress } from '@mui/material'
 
 
 
 const Body = () => {
+  const [loading, setLoading] = useState(true)
   const [sideBarCliked, setSideBarClicked] = useState(false)
   const [cartclicked, setCartClicked] = useState(false);
   const [tokenClicked, setTokenClicked] = useState(false);
@@ -36,6 +38,47 @@ const Body = () => {
     }
 
 
+
+    const token = async () => {
+      try {
+   
+        const response = await fetch("https://food-token-generator-backend.vercel.app/token", {
+        method: "GET",
+        headers: {
+          "x-auth-customertoken": localStorage.getItem("customertoken")
+        }
+      })
+
+      const data = await response.json()
+
+      setFoodTokenlist(data)
+
+        
+      } catch (error) {
+        console.log("token error", error)
+      }
+    }
+
+    const cart = async () => {
+      try {
+
+        const response = await fetch("https://food-token-generator-backend.vercel.app/cart", {
+        method: "GET",
+        headers: {
+          "x-auth-customertoken": localStorage.getItem("customertoken")
+        }
+      })
+
+      const data = await response.json()
+
+      setCartlist(data)
+
+        
+      } catch (error) {
+        console.log("cart error",error)
+      }
+    }
+
     const getfoodList = async () => {
 
       try {
@@ -50,37 +93,11 @@ const Body = () => {
 
         const data = await response.json()
         setFoodList(data)
-
+        setLoading(false)
 
       } catch (error) {
-        console.log("get food error", error)
+        console.log("food error", error)
       }
-    }
-
-    const token = async () => {
-      const response = await fetch("https://food-token-generator-backend.vercel.app/token", {
-        method: "GET",
-        headers: {
-          "x-auth-customertoken": localStorage.getItem("customertoken")
-        }
-      })
-
-      const data = await response.json()
-
-      setFoodTokenlist(data)
-    }
-
-    const cart = async () => {
-      const response = await fetch("https://food-token-generator-backend.vercel.app/cart", {
-        method: "GET",
-        headers: {
-          "x-auth-customertoken": localStorage.getItem("customertoken")
-        }
-      })
-
-      const data = await response.json()
-
-      setCartlist(data)
     }
 
     cart()
@@ -95,23 +112,27 @@ const Body = () => {
 
   return (
     <div className='body'>
+      {loading ?
+        <Box sx={{ display: 'flex', justifyContent: "center",height:"50vh",alignItems:"center" }}>
+          <CircularProgress color="primary" size="40px" />
+        </Box>
+        :
+        <MainContents
 
-      <MainContents
-
-        sideBarCliked={sideBarCliked}
-        setSideBarClicked={setSideBarClicked}
-        cartclicked={cartclicked}
-        setCartClicked={setCartClicked}
-        tokenClicked={tokenClicked}
-        setTokenClicked={setTokenClicked}
-        foodList={foodList}
-        setFoodList={setFoodList}
-        foodTokenlist={foodTokenlist}
-        setFoodTokenlist={setFoodTokenlist}
-        cartlist={cartlist}
-        setCartlist={setCartlist}
-      />
-
+          sideBarCliked={sideBarCliked}
+          setSideBarClicked={setSideBarClicked}
+          cartclicked={cartclicked}
+          setCartClicked={setCartClicked}
+          tokenClicked={tokenClicked}
+          setTokenClicked={setTokenClicked}
+          foodList={foodList}
+          setFoodList={setFoodList}
+          foodTokenlist={foodTokenlist}
+          setFoodTokenlist={setFoodTokenlist}
+          cartlist={cartlist}
+          setCartlist={setCartlist}
+        />
+      }
     </div>
   )
 }

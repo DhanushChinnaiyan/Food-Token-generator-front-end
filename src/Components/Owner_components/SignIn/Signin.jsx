@@ -2,21 +2,24 @@ import * as React from 'react';
 import './Signin.css'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button, Link } from '@mui/material';
+import { Button, CircularProgress, Link } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { useFormik } from 'formik';
 
 const OwnerSignin = () => {
-  const [message,setMessage]=useState("")
+  const [click, setClick] = useState(false)
+  const [message, setMessage] = useState("")
   const history = useHistory()
 
-  const { values, handleChange, handleSubmit, handleBlur} = useFormik({
+  const { values, handleChange, handleSubmit, handleBlur } = useFormik({
     initialValues: {
       email: "",
       password: ""
     },
     onSubmit: (ownerSignin) => {
+      setClick(true)
+      setMessage()
       ownerlogin(ownerSignin)
     }
   })
@@ -34,14 +37,16 @@ const OwnerSignin = () => {
       })
 
       const owner = await response.json();
-      localStorage.setItem("OwnerName",owner.ownerName)
-      localStorage.setItem("ownertoken" , owner.ownerToken)
-     if(owner.ownerToken){
-      return history.push("/ownerdash")
-     }
-     else{
-      setMessage(owner.message)
-     }
+      
+      setClick(false)
+      if (owner.ownerToken) {
+        history.push("/ownerdash")
+        localStorage.setItem("OwnerName", owner.ownerName)
+        localStorage.setItem("ownertoken", owner.ownerToken)
+      }
+      else {
+        setMessage(owner.message)
+      }
 
 
     } catch (error) {
@@ -53,15 +58,15 @@ const OwnerSignin = () => {
   return (
     <div className="ownersignindiv">
       <div className="tittle">
-       OWNER SIGNIN HERE :
-       <div>EMAIL: dhanushms4021@gmail.com</div>
+        OWNER SIGNIN HERE :
+        <div>EMAIL: dhanushms4021@gmail.com</div>
         <div>Password : Password@123</div>
       </div>
       <Box
-      component="form"
-      className='ownersigninform'
-      onSubmit={handleSubmit}
-    >
+        component="form"
+        className='ownersigninform'
+        onSubmit={handleSubmit}
+      >
         <TextField
           required
           id="outlined-required"
@@ -71,7 +76,7 @@ const OwnerSignin = () => {
           onBlur={handleBlur}
           value={values.email}
           name='email'
-        
+
         />
         <TextField
           required
@@ -84,16 +89,22 @@ const OwnerSignin = () => {
           value={values.password}
           name='password'
         />
-      <Button type='submit' variant='contained' color='success'>SIGNIN NOW</Button>
-     
-      <div className="messagediv" style={{color:"red"}}>{message}</div>
-     
-      <Link style={{cursor:"pointer"}} onClick={()=>history.push("/ownerforgotpassword")} underline="hover">
-      Forgot password?
-     </Link>
-     
+        {
+          click ?
+            <Box sx={{ display: 'flex', justifyContent: "center" }}>
+              <CircularProgress color="success" size="24.8px" />
+            </Box>
+            :
+            <Button type='submit' variant='contained' color='success'>SIGNIN NOW</Button>
+        }
+        <div className="messagediv" style={{ color: "red" }}>{message}</div>
 
-    </Box>
+        <Link style={{ cursor: "pointer" }} onClick={() => history.push("/ownerforgotpassword")} underline="hover">
+          Forgot password?
+        </Link>
+
+
+      </Box>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Signup.css'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { Button, Link } from '@mui/material';
+import { Button, CircularProgress, Link } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useHistory } from 'react-router-dom';
@@ -17,7 +17,7 @@ export const customerValidation = yup.object({
 })
 
 const Signup = () => {
-
+  const [click, setClick] = useState(false)
   const [message, setMessage] = useState("")
   const history = useHistory()
 
@@ -29,6 +29,8 @@ const Signup = () => {
     },
     validationSchema: customerValidation,
     onSubmit: (newcustomer) => {
+      setClick(true)
+      setMessage()
       addNewCustomer(newcustomer)
     }
   })
@@ -47,6 +49,7 @@ const Signup = () => {
 
       const customer = await response.json();
 
+      setClick(false)
       if (customer.message === "succefully signed up") {
         history.push("/customersignin")
         setMessage("")
@@ -109,8 +112,14 @@ const Signup = () => {
           value={values.password}
           name='password'
         />
-        <Button type='submit' variant='contained' color='success'>SIGNUP NOW</Button>
-
+        {
+          click ?
+            <Box sx={{ display: 'flex', justifyContent: "center" }}>
+              <CircularProgress color="success" size="24.8px" />
+            </Box>
+            :
+            <Button type='submit' variant='contained' color='success'>SIGNUP NOW</Button>
+        }
         <div className="messagediv" style={{ color: "red" }}>{message}</div>
 
         <Link style={{ cursor: "pointer" }} onClick={() => history.push("/customersignin")} underline="hover">
