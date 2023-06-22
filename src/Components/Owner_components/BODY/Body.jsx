@@ -11,7 +11,7 @@ import Income from '../Income/Income';
 import { Box, CircularProgress } from '@mui/material';
 
 const OwnerBody = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [sideBarCliked, setSideBarClicked] = useState(false)
   const [customersData, setCustomerData] = useState([]);
   const [ownerFoodsDetails, setOwnerFoodsDetails] = useState([]);
@@ -20,6 +20,7 @@ const OwnerBody = () => {
 
   const history = useHistory();
   useEffect(() => {
+    setLoading(true)
     const ownerToken = localStorage.getItem("ownertoken")
 
     if (!ownerToken) return history.replace("/")
@@ -117,18 +118,16 @@ const OwnerBody = () => {
 
   return (
     <div>
+      <Base
+        sideBarCliked={sideBarCliked}
+        setSideBarClicked={setSideBarClicked}
 
-      {loading ?
-        <Box sx={{ display: 'flex', justifyContent: "center", height: "50vh", alignItems: "center" }}>
-          <CircularProgress color="primary" size="40px" />
-        </Box>
-        :
-        <Base
-          sideBarCliked={sideBarCliked}
-          setSideBarClicked={setSideBarClicked}
-
-        >
-
+      >
+        {loading ?
+          <Box sx={{ display: 'flex', justifyContent: "center", height: "50vh", alignItems: "center" }}>
+            <CircularProgress color="primary" size="40px" />
+          </Box>
+          :
           <Switch>
 
             <Route exact path="/ownerdash">
@@ -166,9 +165,9 @@ const OwnerBody = () => {
               <Nopage />
             </Route>
           </Switch>
+        }
+      </Base>
 
-        </Base>
-      }
     </div>
   )
 }

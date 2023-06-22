@@ -14,7 +14,7 @@ import { Box, CircularProgress } from '@mui/material'
 
 
 const Body = () => {
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [sideBarCliked, setSideBarClicked] = useState(false)
   const [cartclicked, setCartClicked] = useState(false);
   const [tokenClicked, setTokenClicked] = useState(false);
@@ -27,7 +27,7 @@ const Body = () => {
 
   useEffect(() => {
 
-
+    setLoading(true)
     const customerToken = localStorage.getItem("customertoken")
     if (!customerToken) return history.replace("/")
 
@@ -112,11 +112,6 @@ const Body = () => {
 
   return (
     <div className='body'>
-      {loading ?
-        <Box sx={{ display: 'flex', justifyContent: "center",height:"50vh",alignItems:"center" }}>
-          <CircularProgress color="primary" size="40px" />
-        </Box>
-        :
         <MainContents
 
           sideBarCliked={sideBarCliked}
@@ -131,15 +126,16 @@ const Body = () => {
           setFoodTokenlist={setFoodTokenlist}
           cartlist={cartlist}
           setCartlist={setCartlist}
+          loading={loading}
         />
-      }
+      
     </div>
   )
 }
 
 export default Body;
 
-const MainContents = ({ cartlist, setCartlist, foodTokenlist, setFoodTokenlist, foodList, setFoodList, sideBarCliked, setSideBarClicked, cartclicked, setCartClicked, tokenClicked, setTokenClicked }) => {
+const MainContents = ({loading, cartlist, setCartlist, foodTokenlist, setFoodTokenlist, foodList, setFoodList, sideBarCliked, setSideBarClicked, cartclicked, setCartClicked, tokenClicked, setTokenClicked }) => {
   return (
     <Base
 
@@ -150,7 +146,13 @@ const MainContents = ({ cartlist, setCartlist, foodTokenlist, setFoodTokenlist, 
       tokenClicked={tokenClicked}
       setTokenClicked={setTokenClicked}
     >
-      {
+      {loading ?
+        <Box sx={{ display: 'flex', justifyContent: "center",height:"50vh",alignItems:"center" }}>
+          <CircularProgress color="primary" size="40px" />
+        </Box>
+        :
+      <div>
+        {
         sideBarCliked &&
         <CustomerSidebar
           foodList={foodList}
@@ -187,7 +189,8 @@ const MainContents = ({ cartlist, setCartlist, foodTokenlist, setFoodTokenlist, 
         setCartClicked={setCartClicked}
         cartclicked={cartclicked}
       />
-
+      </div>
+    }
     </Base>
   )
 }
