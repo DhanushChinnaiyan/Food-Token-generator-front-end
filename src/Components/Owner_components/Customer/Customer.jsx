@@ -19,7 +19,7 @@ const Customer = ({ customersData }) => {
 
   return (
     <div className="customersDiv">
-      <div style={{ height: "70vh", width: 'calc(300px + 30vw)' }}>
+      <div style={{ height: "70vh", width: 'calc(150px + 50vw)' }}>
         <DataGrid
           getRowId={(row) => row._id}
           rows={rows}

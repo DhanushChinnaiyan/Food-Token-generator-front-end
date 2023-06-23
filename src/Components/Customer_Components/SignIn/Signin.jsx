@@ -19,8 +19,8 @@ const Signin = () => {
 
   const { values, handleChange, handleSubmit, handleBlur } = useFormik({
     initialValues: {
-      email: "",
-      password: ""
+      email: "dhanushmd4021@gmail.com",
+      password: "12345678"
     },
     onSubmit: (customerSignin) => {
       setClick(true)
@@ -60,11 +60,6 @@ const Signin = () => {
   }
   return (
     <div className="signindiv">
-      <div className="tittle">
-        CUSTOMER SIGNIN HERE :
-        <div>EMAIL: dhanushmd4021@gmail.com</div>
-        <div>Password : 12345678</div>
-      </div>
       <Box
         component="form"
         className='signinform'

@@ -34,6 +34,11 @@ const Base = ({children,sideBarCliked,setSideBarClicked,cartclicked,setCartClick
         setSideBarClicked(false)
      }
 
+     const onBlurFunction =() => {
+        setTimeout(()=>{
+          setSideBarClicked(false)
+        },200)
+     }
 
     return (
         <div>
@@ -41,7 +46,7 @@ const Base = ({children,sideBarCliked,setSideBarClicked,cartclicked,setCartClick
 
             <AppBar position='fixed'>
                 <Toolbar style={{ display: "flex" }} variant='dense'>
-                    <div style={{ flex: 1 }}>
+                    <div style={{ flex: 1 }} tabIndex="0" onBlur={onBlurFunction}>
                         <GiHamburgerMenu onClick={menuIcon} size="calc(15px + 1vw)" style={{ cursor: "pointer" }} />
                     </div>
 

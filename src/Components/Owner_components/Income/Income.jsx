@@ -168,13 +168,12 @@ const Income = ({ profit }) => {
         >
           <TextField
             id="outlined-select-currency"
-            select
-            label="Select"
+            select          
             defaultValue="WEEK"
 
           >
             {values.map((option) => (
-              <MenuItem key={option.value} onClick={() => setSorting(option.value)} value={option.value}>
+              <MenuItem  key={option.value} onClick={() => setSorting(option.value)} value={option.value}>
                 {option.label}
               </MenuItem>
             ))}

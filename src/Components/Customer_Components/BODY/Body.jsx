@@ -37,48 +37,6 @@ const Body = () => {
       history.push("/")
     }
 
-
-
-    const token = async () => {
-      try {
-   
-        const response = await fetch("https://food-token-generator-backend.vercel.app/token", {
-        method: "GET",
-        headers: {
-          "x-auth-customertoken": localStorage.getItem("customertoken")
-        }
-      })
-
-      const data = await response.json()
-
-      setFoodTokenlist(data)
-
-        
-      } catch (error) {
-        console.log("token error", error)
-      }
-    }
-
-    const cart = async () => {
-      try {
-
-        const response = await fetch("https://food-token-generator-backend.vercel.app/cart", {
-        method: "GET",
-        headers: {
-          "x-auth-customertoken": localStorage.getItem("customertoken")
-        }
-      })
-
-      const data = await response.json()
-
-      setCartlist(data)
-
-        
-      } catch (error) {
-        console.log("cart error",error)
-      }
-    }
-
     const getfoodList = async () => {
 
       try {
@@ -100,14 +58,10 @@ const Body = () => {
       }
     }
 
-    cart()
-
-    token()
-
     getfoodList()
 
 
-  }, [cartclicked, tokenClicked, history])
+  }, [])
 
 
   return (

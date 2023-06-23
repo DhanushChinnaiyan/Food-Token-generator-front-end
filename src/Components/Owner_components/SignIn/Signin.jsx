@@ -14,8 +14,8 @@ const OwnerSignin = () => {
 
   const { values, handleChange, handleSubmit, handleBlur } = useFormik({
     initialValues: {
-      email: "",
-      password: ""
+      email: "dhanushms4021@gmail.com",
+      password: "Password@123"
     },
     onSubmit: (ownerSignin) => {
       setClick(true)
@@ -57,11 +57,6 @@ const OwnerSignin = () => {
 
   return (
     <div className="ownersignindiv">
-      <div className="tittle">
-        OWNER SIGNIN HERE :
-        <div>EMAIL: dhanushms4021@gmail.com</div>
-        <div>Password : Password@123</div>
-      </div>
       <Box
         component="form"
         className='ownersigninform'

@@ -19,9 +19,10 @@ const Base = ({ children, setSideBarClicked, sideBarCliked }) => {
         history.replace("/")
     }
 
-    const menuIcon = () => {
-        setSideBarClicked(!sideBarCliked)
-
+    const onBlurFunction = () => {
+        setTimeout(() => {
+            setSideBarClicked(false)
+        }, 100)
     }
 
 
@@ -32,8 +33,8 @@ const Base = ({ children, setSideBarClicked, sideBarCliked }) => {
 
             <AppBar position='fixed'>
                 <Toolbar style={{ display: "flex" }} variant='dense'>
-                    <div style={{ flex: 1 }}>
-                        <GiHamburgerMenu onClick={menuIcon} size="calc(15px + 1vw)" style={{ cursor: "pointer" }} />
+                    <div style={{ flex: 1 }} tabIndex="0" onBlur={onBlurFunction}>
+                        <GiHamburgerMenu onClick={() => setSideBarClicked(!sideBarCliked)} size="calc(15px + 1vw)" style={{ cursor: "pointer" }} />
                     </div>
 
                     <div style={{ flex: 2, textAlign: "center" }}>

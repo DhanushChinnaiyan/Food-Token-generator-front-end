@@ -10,7 +10,7 @@
 .chart {
     display: flex;
     justify-content: center;
-    width: calc(350px + 20vw);
+    width: calc(200px + 30vw);
  
 }
 

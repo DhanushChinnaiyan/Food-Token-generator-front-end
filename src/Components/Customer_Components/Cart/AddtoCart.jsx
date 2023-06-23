@@ -1,17 +1,47 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Cart.css'
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
+import emptycart from '../emptycart.png'
+import { CircularProgress } from '@mui/material';
 
 
 const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, setSideBarClicked, setCartClicked, setTokenClicked }) => {
+  const [cartEmpty, setCartEmpty] = useState(false)
+  const [loading,setLoading] = useState(false)
+  useEffect(()=>{
+    if (cartlist.length === 0) {
+      setCartEmpty(true)
+    }
+  },[cartlist])
+  useEffect(() => {
+    
 
-  if (cartlist.length === 0) {
-    setCartClicked(false)
-  }
+    const cart = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch("https://food-token-generator-backend.vercel.app/cart", {
+        method: "GET",
+        headers: {
+          "x-auth-customertoken": localStorage.getItem("customertoken")
+        }
+      })
+
+      const data = await response.json()
+       if(data !== undefined){
+      setCartlist(data)
+       }
+       setLoading(false)
+      } catch (error) {
+        console.log("cart error",error)
+      }
+    }
+
+    cart()
+  }, [])
   const handleClick = async (id, foodId) => {
     try {
 
@@ -78,47 +108,47 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
   // decrease the product count
 
   const decreaseProduct = async (id, foodCount) => {
-   if(foodCount>1){
-    try {
+    if (foodCount > 1) {
+      try {
 
-      const count = foodCount - 1
+        const count = foodCount - 1
 
-      const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/edit/${id}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          foodCount: count
-        }),
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-customertoken": localStorage.getItem("customertoken"),
+        const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/edit/${id}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            foodCount: count
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-customertoken": localStorage.getItem("customertoken"),
 
+          }
+
+        })
+        const data = await response.json();
+
+        if (data) {
+          const editedCart = cartlist.findIndex((element) => element._id === id)
+
+          const price = cartlist[editedCart].foodPrice * count
+
+
+          cartlist[editedCart] = {
+            _id: cartlist[editedCart]._id,
+            foodName: cartlist[editedCart].foodName,
+            foodImage: cartlist[editedCart].foodImage,
+            foodPrice: cartlist[editedCart].foodPrice,
+            foodCount: count,
+            totalFoodPrice: price,
+          }
+
+          setCartlist([...cartlist])
         }
 
-      })
-      const data = await response.json();
-
-      if (data) {
-        const editedCart = cartlist.findIndex((element) => element._id === id)
-
-        const price = cartlist[editedCart].foodPrice * count
-
-
-        cartlist[editedCart] = {
-          _id: cartlist[editedCart]._id,
-          foodName: cartlist[editedCart].foodName,
-          foodImage: cartlist[editedCart].foodImage,
-          foodPrice: cartlist[editedCart].foodPrice,
-          foodCount: count,
-          totalFoodPrice: price,
-        }
-
-        setCartlist([...cartlist])
+      } catch (error) {
+        console.log("decreament error", error)
       }
-
-    } catch (error) {
-      console.log("decreament error", error)
     }
-   }
 
   }
 
@@ -160,13 +190,33 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
 
 
   return (
-    <div className='customerCart'>
+    <div className={loading?'customerCart loading':'customerCart'}>
+      {
+        loading? <CircularProgress size="calc(10px + 3vw)" color='error'/> : cartEmpty ? <EmptyCart />
+          :
+          <Cart
+            cartlist={cartlist}
+            decreaseProduct={decreaseProduct}
+            increaseproduct={increaseproduct}
+            handleBuy={handleBuy}
+            handleClick={handleClick}
+          />
+      }
 
+
+
+    </div>
+  )
+}
+
+const Cart = ({ cartlist, decreaseProduct, increaseproduct, handleBuy, handleClick }) => {
+  return (
+    <div>
       <div className="addtocartTittle">
         ADD TO CART :
       </div>
       <div className="addtocartDiv">
-        {
+        {cartlist !== undefined &&
           cartlist.map((element, index) => {
 
             // console.log(element._id)
@@ -185,7 +235,7 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
                     <span>{element?.foodName}</span>
                   </Typography>
                   <Typography gutterBottom component="div">
-                  <Button onClick={() => decreaseProduct(element._id, element.foodCount)} style={{ padding: 0, fontSize: "calc(10px + 2vw)" }}>-</Button> <span>{element?.foodCount}</span><Button onClick={() => increaseproduct(element._id, element.foodCount)} style={{ padding: 0, fontSize: "calc(10px + 2vw)" }}>+</Button>
+                    <Button onClick={() => decreaseProduct(element._id, element.foodCount)} style={{ padding: 0, fontSize: "calc(10px + 2vw)" }}>-</Button> <span>{element?.foodCount}</span><Button onClick={() => increaseproduct(element._id, element.foodCount)} style={{ padding: 0, fontSize: "calc(10px + 2vw)" }}>+</Button>
                   </Typography>
                   <Typography gutterBottom component="div">
                     <span>Price:</span> <span>{element?.totalFoodPrice}.RS</span>
@@ -197,6 +247,19 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
             )
           })
         }
+      </div>
+    </div>
+  )
+}
+
+const EmptyCart = () => {
+  return (
+    <div>
+      <div className="addtocartTittle">
+        YOUR CART IS EMPTY
+      </div>
+      <div className="addtocartDiv">
+        <img src={emptycart} alt="CART IS EMPTY" />
       </div>
     </div>
   )

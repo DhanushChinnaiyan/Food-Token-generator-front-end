@@ -143,7 +143,7 @@ const Addfood = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
                     </Select>
                 </FormControl>
                 <TextField
-                    required id="outlined-basic"
+                    required id="outlined-basic-name"
                     label="FOOD NAME"
                     variant="outlined"
                     onChange={handleChange}
@@ -154,7 +154,7 @@ const Addfood = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
                 />
                 <TextField
                     required
-                    id="outlined-basic"
+                    id="outlined-basic-price"
                     label="FOOD PRICE"
                     variant="outlined"
                     onChange={handleChange}
