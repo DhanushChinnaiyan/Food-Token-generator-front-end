@@ -115,7 +115,7 @@ const Addfood = ({ ownerFoodsDetails, setOwnerFoodsDetails }) => {
 
     return (
         <div className="fooddiv">
-            <form className='addfood' onSubmit={handleSubmit}>
+            <form className='addfood' onSubmit={handleSubmit} >
                 <TextField
                     required id="outlined-basic"
                     label="IMG URL"
