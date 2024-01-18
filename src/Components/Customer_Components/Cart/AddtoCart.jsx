@@ -10,13 +10,8 @@ import { CircularProgress } from '@mui/material';
 
 
 const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, setSideBarClicked, setCartClicked, setTokenClicked }) => {
-  const [cartEmpty, setCartEmpty] = useState(false)
   const [loading,setLoading] = useState(false)
-  useEffect(()=>{
-    if (cartlist.length === 0) {
-      setCartEmpty(true)
-    }
-  },[cartlist])
+
   useEffect(() => {
     
 
@@ -34,17 +29,20 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
        if(data !== undefined){
       setCartlist(data)
        }
-       setLoading(false)
+       
       } catch (error) {
         console.log("cart error",error)
+      }finally{
+        setLoading(false)
       }
     }
 
     cart()
   }, [])
+
+  // remove the cart
   const handleClick = async (id, foodId) => {
     try {
-
       const response = await fetch(`https://food-token-generator-backend.vercel.app/cart/delete/${id}`, {
         method: "DELETE",
         headers: {
@@ -192,7 +190,7 @@ const AddtoCart = ({ setFoodTokenlist, foodTokenlist, cartlist, setCartlist, set
   return (
     <div className={loading?'customerCart loading':'customerCart'}>
       {
-        loading? <CircularProgress size="calc(10px + 3vw)" color='error'/> : cartEmpty ? <EmptyCart />
+        loading? <CircularProgress size="calc(10px + 3vw)" color='error'/> : cartlist.length === 0 ? <EmptyCart />
           :
           <Cart
             cartlist={cartlist}

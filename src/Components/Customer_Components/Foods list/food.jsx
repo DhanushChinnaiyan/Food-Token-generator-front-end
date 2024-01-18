@@ -53,7 +53,7 @@ const Biriyani = ({ foodList, cartclicked, setCartClicked, setCartlist, cartlist
             <div className="foods">
 
 
-                {
+                {foodList.length !== 0 &&
                     foodList.map((element, index) => {
                         return (
                             element.foodCategory === "biriyani" &&
@@ -87,7 +87,7 @@ const Burger = ({ foodList, cartclicked, setCartClicked, setCartlist, cartlist }
             <div className="foods">
 
 
-                {
+                {foodList.length !== 0 &&
                     foodList.map((element, index) => {
                         return (
                             element.foodCategory === "burger" &&
@@ -121,7 +121,7 @@ const Shawarma = ({ foodList, cartclicked, setCartClicked, setCartlist, cartlist
             <div className="foods">
 
 
-                {
+                {foodList.length !== 0 &&
                     foodList.map((element, index) => {
                         return (
                             element.foodCategory === "shawarma" &&
@@ -155,7 +155,7 @@ const Noodles = ({ foodList, cartclicked, setCartClicked, setCartlist, cartlist 
             <div className="foods">
 
 
-                {
+                {foodList.length !== 0 &&
                     foodList.map((element, index) => {
                         return (
                             element.foodCategory === "noodles" &&

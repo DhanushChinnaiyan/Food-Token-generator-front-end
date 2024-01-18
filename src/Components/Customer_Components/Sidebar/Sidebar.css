@@ -1,7 +1,5 @@
 
 .customersidebarMainDiv{
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
     height: 87.5vh;
     width: calc(80px + 5vw);
     padding: calc(10px + 1vw);

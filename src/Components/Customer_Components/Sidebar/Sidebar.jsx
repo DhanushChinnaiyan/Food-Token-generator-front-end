@@ -5,11 +5,6 @@ import {Link} from 'react-scroll'
 
 const CustomerSidebar = ({setSideBarClicked}) => {
 
-
-
-
-
-
     return (
         <div className='customersidebarMainDiv'>
             <div className="customername">
